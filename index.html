@@ -1,0 +1,3681 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-state-saved-at="2026-05-31T21:50:25.458Z"><head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acacia Wealth — Actions Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --navy: #1F3864;
+    --gold: #C9A84C;
+    --red: #E74C3C;
+    --red-bg: #FDECEA;
+    --amber: #F39C12;
+    --amber-bg: #FFF3CD;
+    --green: #27AE60;
+    --green-bg: #E8F5E9;
+    --blue: #2980B9;
+    --blue-bg: #E3F2FD;
+    --grey: #7F8C8D;
+    --grey-bg: #F5F5F5;
+    --bg: #F0F3F8;
+    --white: #FFFFFF;
+    --card-shadow: 0 2px 12px rgba(31,56,100,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: #2C3E50;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1F3864 0%, #2C4F8C 100%);
+    color: white;
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left h1 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .header-left p {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .header-date {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 10px 18px;
+    text-align: right;
+  }
+  .header-date .label { font-size: 10px; opacity: 0.65; text-transform: uppercase; letter-spacing: 1px; }
+  .header-date .date { font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .completion-counter {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .reset-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+  }
+  .reset-btn:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .reset-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .reset-btn:disabled:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main { padding: 28px 40px; max-width: 1400px; margin: 0 auto; }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(31,56,100,0.15);
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-container {
+    margin-bottom: 28px;
+    background: white;
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: var(--card-shadow);
+  }
+  .progress-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .progress-bar-outer {
+    width: 100%;
+    height: 8px;
+    background: #E8EBED;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), #1E8449);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* ── TYRON HERO BANNER ── */
+  .tyron-banner {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFFDE7 100%);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .tyron-avatar {
+    width: 56px; height: 56px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .tyron-info h2 { font-size: 18px; font-weight: 700; color: var(--navy); }
+  .tyron-info p { font-size: 13px; color: #666; margin-top: 2px; }
+  .tyron-stats { margin-left: auto; display: flex; gap: 16px; }
+  .tyron-stat {
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    padding: 12px 20px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  }
+  .tyron-stat .num { font-size: 28px; font-weight: 800; line-height: 1; }
+  .tyron-stat .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #888; margin-top: 4px; }
+  .tyron-stat.urgent .num { color: var(--red); }
+  .tyron-stat.today .num { color: var(--amber); }
+  .tyron-stat.week .num { color: var(--blue); }
+
+  /* ── TYRON TASK CARDS ── */
+  .tyron-tasks { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .task-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: var(--card-shadow);
+    border-left: 4px solid transparent;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s, background-color 0.2s;
+    cursor: pointer;
+  }
+  .task-card:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(31,56,100,0.15); }
+  .task-card.urgent { border-left-color: var(--red); background: #FFFAFA; }
+  .task-card.today  { border-left-color: var(--amber); background: #FFFEF8; }
+  .task-card.week   { border-left-color: var(--blue); }
+  .task-card.upcoming { border-left-color: var(--green); }
+  .task-card.removing {
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, max-height 0.35s ease 0.2s, padding 0.35s ease 0.2s, margin 0.35s ease 0.2s;
+  }
+
+  .task-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #CCC;
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-top: 2px;
+    background: white;
+  }
+  .task-checkbox:hover {
+    border-color: var(--green);
+  }
+  .task-checkbox.checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .task-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .task-badge {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  .task-badge.urgent  { background: var(--red-bg);   color: var(--red);   }
+  .task-badge.today   { background: var(--amber-bg); color: #856404;      }
+  .task-badge.week    { background: var(--blue-bg);  color: var(--blue);  }
+  .task-badge.upcoming{ background: var(--green-bg); color: var(--green); }
+  .task-badge.done-badge { background: var(--green-bg); color: var(--green); }
+
+  .task-body { flex: 1; }
+  .task-body .task-title { font-size: 14px; font-weight: 600; color: #1a1a2e; line-height: 1.4; }
+  .task-body .task-meta { margin-top: 4px; font-size: 12px; color: #888; display: flex; gap: 12px; flex-wrap: wrap; }
+  .task-body .task-meta span { display: flex; align-items: center; gap: 4px; }
+  .task-due {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #555;
+    text-align: right;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .task-due.overdue { color: var(--red); }
+  .task-due.today-due { color: #856404; }
+
+  /* ── TWO COLUMN ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+
+  /* ── URGENCY CHART ── */
+  .chart-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+  }
+  .chart-card h3 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 18px; }
+
+  .urgency-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .urgency-label {
+    width: 90px;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .urgency-bar-wrap {
+    flex: 1;
+    background: #F0F3F8;
+    border-radius: 6px;
+    height: 28px;
+    overflow: hidden;
+    position: relative;
+  }
+  .urgency-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    transition: width 0.8s ease;
+    white-space: nowrap;
+  }
+  .urgency-count {
+    width: 36px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .urg-urgent { background: linear-gradient(90deg, #E74C3C, #C0392B); }
+  .urg-today  { background: linear-gradient(90deg, #F39C12, #D68910); }
+  .urg-week   { background: linear-gradient(90deg, #3498DB, #2980B9); }
+  .urg-upcoming { background: linear-gradient(90deg, #27AE60, #1E8449); }
+  .urg-ongoing { background: linear-gradient(90deg, #95A5A6, #7F8C8D); }
+
+  /* ── TEAM PIE-LIKE ── */
+  .team-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .person-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .person-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+    color: white;
+  }
+  .person-name { width: 100px; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+  .person-bar-wrap {
+    flex: 1;
+    background: #F0F3F8;
+    border-radius: 6px;
+    height: 22px;
+    overflow: hidden;
+  }
+  .person-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex; align-items: center; padding-left: 8px;
+    font-size: 11px; font-weight: 700; color: white;
+  }
+  .person-count { width: 30px; text-align: right; font-size: 13px; font-weight: 800; color: var(--navy); }
+
+  /* ── TEAM TABLE ── */
+  .team-section { margin-bottom: 32px; }
+  .person-block {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+  }
+  .person-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .person-header .avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: white;
+    flex-shrink: 0;
+  }
+  .person-header .info h3 { font-size: 15px; font-weight: 700; }
+  .person-header .info p { font-size: 12px; color: #888; margin-top: 1px; }
+  .person-header .count {
+    margin-left: auto;
+    background: var(--navy);
+    color: white;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .task-list { padding: 0 16px 16px; }
+  .task-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 10px;
+    border-radius: 8px;
+    border-bottom: 1px solid #F0F3F8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: opacity 0.2s, background-color 0.2s;
+  }
+  .task-row:last-child { border-bottom: none; }
+  .task-row:hover { background: #FAFBFD; }
+  .task-row.removing {
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, max-height 0.35s ease 0.2s, padding 0.35s ease 0.2s;
+  }
+
+  .task-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .dot-urgent   { background: var(--red); }
+  .dot-today    { background: var(--amber); }
+  .dot-week     { background: var(--blue); }
+  .dot-upcoming { background: var(--green); }
+  .dot-ongoing  { background: var(--grey); }
+
+  .task-row-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #CCC;
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-top: 1px;
+    background: white;
+  }
+  .task-row-checkbox:hover {
+    border-color: var(--green);
+  }
+  .task-row-checkbox.checked {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .task-row-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .task-row-text { flex: 1; line-height: 1.4; color: #222; }
+  .task-row-due {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .due-urgent  { background: var(--red-bg);   color: var(--red);   }
+  .due-today   { background: var(--amber-bg); color: #856404;      }
+  .due-week    { background: var(--blue-bg);  color: var(--blue);  }
+  .due-upcoming{ background: var(--green-bg); color: var(--green); }
+  .due-ongoing { background: var(--grey-bg);  color: var(--grey);  }
+  .due-done    { background: var(--green-bg); color: var(--green); }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    background: white;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    box-shadow: var(--card-shadow);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ── TIMELINE ── */
+  .timeline-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 32px;
+  }
+  .timeline-card h3 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 20px; }
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--red) 0%, var(--amber) 20%, var(--blue) 60%, var(--green) 100%);
+  }
+  .timeline-group { margin-bottom: 20px; }
+  .timeline-date {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navy);
+    position: relative;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .timeline-date::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+  .timeline-date.overdue { color: var(--red); }
+  .timeline-date.today   { color: var(--amber); }
+  .timeline-date.week    { color: var(--blue); }
+  .timeline-date.upcoming{ color: var(--green); }
+
+  .timeline-items { display: flex; flex-direction: column; gap: 5px; }
+  .timeline-item.removing {
+    opacity: 0;
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, max-height 0.35s ease 0.2s, padding 0.35s ease 0.2s, margin 0.35s ease 0.2s;
+  }
+  .timeline-item {
+    font-size: 12px;
+    background: #F8FAFC;
+    border-radius: 6px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ti-person {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    color: white;
+    flex-shrink: 0;
+  }
+  .ti-text { flex: 1; color: #333; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: #AAA;
+    margin-top: 20px;
+  }
+
+  /* ── ADD TASK BUTTON ── */
+  .add-task-btn {
+    background: rgba(31,56,100,0.08);
+    border: 1.5px solid rgba(31,56,100,0.18);
+    color: var(--navy);
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .add-task-btn:hover { background: var(--navy); color: white; border-color: var(--navy); }
+  .person-header .add-task-btn { margin-left: 10px; }
+
+  /* ── ADD TASK MODAL ── */
+  .add-task-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.42);
+    z-index: 200000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .add-task-overlay.open { opacity: 1; pointer-events: all; }
+  .add-task-modal {
+    background: white; border-radius: 16px; padding: 28px 32px;
+    width: 500px; max-width: calc(100vw - 32px);
+    box-shadow: 0 24px 60px rgba(31,56,100,0.28);
+    transform: translateY(20px); transition: transform 0.25s ease;
+  }
+  .add-task-overlay.open .add-task-modal { transform: translateY(0); }
+  .add-task-modal-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+  }
+  .add-task-modal-header .at-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: white; flex-shrink: 0;
+  }
+  .add-task-modal-header h2 { font-size: 16px; font-weight: 700; color: var(--navy); }
+  .add-task-field { margin-bottom: 14px; }
+  .add-task-field label {
+    display: block; font-size: 11px; font-weight: 700; color: #666;
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.7px;
+  }
+  .add-task-field input, .add-task-field select {
+    width: 100%; padding: 10px 14px; border-radius: 8px;
+    border: 1.5px solid #d6dde6; font-size: 14px;
+    font-family: 'Inter', sans-serif; color: #222; background: #fafbfc;
+    transition: border-color 0.15s ease; outline: none; box-sizing: border-box;
+  }
+  .add-task-field input:focus, .add-task-field select:focus {
+    border-color: var(--navy); background: white;
+  }
+  .add-task-field input.error { border-color: var(--red); }
+  .add-task-actions {
+    display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;
+  }
+  .add-task-actions .btn-cancel {
+    background: transparent; border: 1.5px solid #d6dde6; color: #666;
+    padding: 9px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: all 0.15s ease;
+  }
+  .add-task-actions .btn-cancel:hover { border-color: #aaa; color: #333; }
+  .add-task-actions .btn-submit {
+    background: var(--navy); color: white; border: none;
+    padding: 9px 22px; border-radius: 8px; font-size: 13px; font-weight: 700;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: background 0.15s ease;
+  }
+  .add-task-actions .btn-submit:hover { background: #16294a; }
+
+  @media (max-width: 900px) {
+    .main { padding: 16px; }
+    .two-col { grid-template-columns: 1fr; }
+    .tyron-stats { flex-wrap: wrap; }
+    .header { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .header-right { flex-direction: column; width: 100%; }
+    .header-controls { width: 100%; }
+  }
+
+  /* ── Reassign control ─────────────────────────────────────────────────── */
+  .reassign-btn {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(0,0,0,0.08);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #5d6b7d;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+    z-index: 5;
+    user-select: none;
+  }
+  .task-card { position: relative; }
+  .task-row { position: relative; }
+  .task-card:hover .reassign-btn,
+  .task-row:hover  .reassign-btn,
+  .reassign-btn.menu-open { opacity: 1; }
+  .reassign-btn:hover { background:#1F3864; color:#fff; }
+  .task-row .reassign-btn {
+    width: 22px; height: 22px; top: 50%; transform: translateY(-50%);
+    right: 92px; font-size: 12px; background: rgba(255,255,255,0.6);
+  }
+
+  .reassign-menu {
+    position: fixed;
+    background: #fff;
+    border: 1px solid #d6dde6;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(31,56,100,0.22);
+    padding: 6px;
+    min-width: 168px;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .reassign-menu .ra-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #8898ad;
+    padding: 6px 8px 4px;
+  }
+  .reassign-menu button {
+    text-align: left;
+    background: transparent;
+    border: 0;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #1F3864;
+  }
+  .reassign-menu button:hover { background: #f1f4f9; }
+  .reassign-menu .ra-dot {
+    width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+    color: #fff; font-size: 9px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  @keyframes reassignPulse {
+    0%   { background: rgba(46,204,113,0.35); }
+    100% { background: transparent; }
+  }
+  .reassign-flash { animation: reassignPulse 1.2s ease-out; }
+  .save-btn { background: #1F3864 !important; color: #fff !important; border-color: #1F3864 !important; }
+  .save-btn:hover { background: #16294a !important; }
+  .save-btn.dirty { animation: saveDirtyPulse 1.6s ease-in-out infinite; }
+  @keyframes saveDirtyPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+    50%      { box-shadow: 0 0 0 6px rgba(46,204,113,0.35); }
+  }
+  .save-toast {
+    position: fixed; right: 24px; bottom: 24px; max-width: 360px;
+    background: #1F3864; color: #fff; padding: 14px 18px;
+    border-radius: 10px; box-shadow: 0 12px 28px rgba(31,56,100,0.3);
+    font-size: 13px; line-height: 1.45; z-index: 100001;
+    opacity: 0; transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateY(8px);
+  }
+  .save-toast.visible { opacity: 1; transform: translateY(0); }
+  .save-toast .toast-title { font-weight: 700; margin-bottom: 4px; }
+</style>
+</head>
+<body id="artifacts-component-root-html">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>Acacia Wealth — Actions Dashboard</h1>
+    <p>167 open actions across 7 people · Updated 15 Jun 2026</p>
+  </div>
+  <div class="header-right">
+    <div class="header-controls">
+      <div class="completion-counter">
+        <div><span id="completedCount">0</span> of <span id="totalCount">167</span> done</div>
+      </div>
+      <button class="reset-btn" id="undoBtn" onclick="undoLastTick()" title="Undo last tick (Cmd/Ctrl+Z)">↩ Undo</button>
+      <button class="reset-btn save-btn" id="saveBtn" onclick="saveDashboard()" title="Download current dashboard with completed items baked in — overwrite the OneDrive file with the download">💾 Save Progress</button>
+      <button class="reset-btn" id="copyTicksBtn" onclick="copyTicksToClaude()" title="Copy completed task IDs to clipboard — paste into Claude chat to save the new baseline directly to the Action Board folder">📋 Copy ticks for Claude</button>
+      <button class="reset-btn" onclick="resetAll()">Reset All</button>
+    </div>
+    <div class="header-date">
+      <div class="label">Today</div>
+      <div class="date">Mon 15 June 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#E74C3C"></div> Overdue / ASAP</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F39C12"></div> Due Today (15 Jun)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3498DB"></div> This Week (17–20 Apr)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#27AE60"></div> Upcoming</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#95A5A6"></div> Ongoing</div>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-container">
+    <div class="progress-label">Overall Completion</div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar" style="width: 16.6667%;"></div>
+    </div>
+  </div>
+
+  <!-- TYRON SECTION -->
+  <div class="section-title">Your Actions — Tyron<button type="button" class="add-task-btn" title="Add a task for Tyron" onclick="event.stopPropagation();openAddTaskModal('tyron')">+ Add Task</button></div>
+
+  <div class="tyron-banner">
+    <div class="tyron-avatar">T</div>
+    <div class="tyron-info">
+      <h2>Tyron Edmonds</h2>
+      <p>Managing Director · <span id="tyronTotalLabel">50 personal actions</span></p>
+    </div>
+    <div class="tyron-stats">
+      <div class="tyron-stat urgent">
+        <div class="num" id="tyronOverdue">1</div>
+        <div class="lbl">Overdue</div>
+      </div>
+      <div class="tyron-stat today">
+        <div class="num" id="tyronToday">1</div>
+        <div class="lbl">Today</div>
+      </div>
+      <div class="tyron-stat week">
+        <div class="num" id="tyronUpcoming">19</div>
+        <div class="lbl">Upcoming</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    <div class="task-card today" data-tyron-index="70" onclick="toggleTyronTask(70)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Contact Charlie Kendall</div>
+        <div class="task-meta">
+          <span>👤 Charlie Kendall</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="83" onclick="toggleTyronTask(83)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Send email to Lodders</div>
+        <div class="task-meta">
+          <span>📎 Lodders (solicitor)</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card urgent" data-tyron-index="84" onclick="toggleTyronTask(84)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge urgent">⚠ ASAP</div>
+      <div class="task-body">
+        <div class="task-title">Draft response to Colin Hales / Sandra estate complaint</div>
+        <div class="task-meta">
+          <span>👤 Colin Hales</span>
+          <span>⚖ Complaint</span>
+          <span>💬 8-week complaints clock running — trust consent / ISA authority issue</span>
+        </div>
+      </div>
+      <div class="task-due overdue">ASAP</div>
+    </div>
+
+    
+
+    <div class="task-card week" data-tyron-index="86" onclick="toggleTyronTask(86)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Discuss Stafford corporate GIA with Ben — case for fund reuse vs Jake's discretionary service</div>
+        <div class="task-meta">
+          <span>👤 Ben (Stafford case)</span>
+          <span>💬 CGT implications; avoid unnecessary expense</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="87" onclick="toggleTyronTask(87)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Email PI provider re DB advice positioning</div>
+        <div class="task-meta">
+          <span>🛡 PI cover</span>
+          <span>💬 Confirm cover for advising AVC / DC contributions into hybrid scheme without DB transfer specialist status</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="88" onclick="toggleTyronTask(88)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Brief Thistle to review prepared DB advice before client presentation</div>
+        <div class="task-meta">
+          <span>⚖ Compliance</span>
+          <span>🛡 Thistle</span>
+          <span>💬 Final hurdle before recommending hybrid-scheme AVC contributions</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="89" onclick="toggleTyronTask(89)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Strategy paper for Focus Financial Planning acquisition</div>
+        <div class="task-meta">
+          <span>👤 Ross</span>
+          <span>💼 Acquisition</span>
+          <span>💬 Ross asked Tyron to put a strategy in place</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">🗓 WAKE Meeting — Mon 1 Jun 2026</div>
+
+    <div class="task-card today" data-tyron-index="90" onclick="toggleTyronTask(90)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Text/call Colin Corner to sign LOA (Clerical Medical)</div>
+        <div class="task-meta">
+          <span>👤 Colin Corner</span>
+          <span>💬 Niamh has chased by email — drop him a text/call if you have his number</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="91" onclick="toggleTyronTask(91)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Ask Neil (provider) what specific fund range info he needs — offer to send CIP</div>
+        <div class="task-meta">
+          <span>👤 Colin Corner</span>
+          <span>💬 Neil emailed asking for selected investment provider fund range; clarify what he wants before sending 7iM/HFL model portfolios</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="92" onclick="toggleTyronTask(92)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Call Gillian Hatfield again</div>
+        <div class="task-meta">
+          <span>👤 Gillian Hatfield</span>
+          <span>💬 Tried before leaving last week — no answer; try again this week</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="93" onclick="toggleTyronTask(93)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Contact Aviva re Chris Jackson life cover — confirm provider and 250k sum assured</div>
+        <div class="task-meta">
+          <span>👤 Chris Jackson</span>
+          <span>💬 Previous SL was based on 500k; he now wants 250k — provider may change too</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="94" onclick="toggleTyronTask(94)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Follow up Yousif — chase employment confirmation</div>
+        <div class="task-meta">
+          <span>👤 Yousif</span>
+          <span>💬 Protection case on hold pending confirmation of employment — he said sometime in July</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="95" onclick="toggleTyronTask(95)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Sit with Ben on Thursday to work on Juliet Brown SL</div>
+        <div class="task-meta">
+          <span>👤 Juliet Brown</span>
+          <span>💬 Recurring item — block an hour Thursday, all figures available</span>
+        </div>
+      </div>
+      <div class="task-due">Thu 4 Jun</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="96" onclick="toggleTyronTask(96)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Speak to Richard Spencer at Wednesday dinner</div>
+        <div class="task-meta">
+          <span>👤 Richard Spencer</span>
+          <span>💬 Nothing progressed by email — catch him at Gotcho dinner Wed 3 Jun</span>
+        </div>
+      </div>
+      <div class="task-due">Wed 3 Jun</div>
+    </div>
+
+    <div class="task-card upcoming" data-tyron-index="97" onclick="toggleTyronTask(97)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">Upcoming</div>
+      <div class="task-body">
+        <div class="task-title">Organise James Tomlinson role-play (decide Kate or Catherine) and induction prep</div>
+        <div class="task-meta">
+          <span>👤 James Tomlinson</span>
+          <span>💬 Joining 6 Jul — role-play likely Friday before start; background checks / due diligence also needed</span>
+        </div>
+      </div>
+      <div class="task-due">Before 6 Jul</div>
+    </div>
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#1F3864; border:1.5px dashed rgba(31,56,100,0.45); border-radius:8px; margin-bottom:10px; background:rgba(31,56,100,0.06);">📋 WAKE Meeting — Monday 8 June 2026</div>
+
+  <div class="tyron-tasks">
+
+    <div class="task-card today" data-tyron-index="98" onclick="toggleTyronTask(98)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Chase Richard Spencer — Interactive Investor wet-signature LOA (send direct to II, not to us)</div>
+        <div class="task-meta">
+          <span>👤 Richard Spencer</span>
+          <span>💬 Form signed and sent to him — he needs to post it to II, not return it to Acacia</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="99" onclick="toggleTyronTask(99)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Call Phil Kimpton — confirm he's proceeding with £100k+ investment</div>
+        <div class="task-meta">
+          <span>👤 Phil Kimpton</span>
+          <span>💬 He called this morning to say he wants to go ahead — speak to him today</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="100" onclick="toggleTyronTask(100)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Contact Sam Cook — invite him to the military event only (do not chase LOA)</div>
+        <div class="task-meta">
+          <span>👤 Sam Cook</span>
+          <span>💬 He told Catherine to stop chasing — approach softly via event invite only; gauge response</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="101" onclick="toggleTyronTask(101)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Call Kate Willis — run through the new portfolio analysis report with her</div>
+        <div class="task-meta">
+          <span>👤 Kate Willis</span>
+          <span>💬 Report prepared; she's significantly overexposed to US/tech — frame call around risks (AI valuations, data centre spend, DeepSeek scenario) before recommending changes</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="102" onclick="toggleTyronTask(102)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Confirm whether Corne meeting is in person or virtual — arrange LOA signing accordingly</div>
+        <div class="task-meta">
+          <span>👤 Corne</span>
+          <span>💬 Clerical Medical LOA needs wet signature — if in person get him to sign today; if virtual ask Niamh to post form</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="103" onclick="toggleTyronTask(103)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Send Gene Magnus amended SL — NatWest ISA is cash not stocks &amp; shares (zero charges)</div>
+        <div class="task-meta">
+          <span>👤 Gene Magnus</span>
+          <span>💬 Kate has updated the SL; confirm no other outstanding queries then send today/tomorrow</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="104" onclick="toggleTyronTask(104)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Follow up on Focus Financial Planning — send proposal and arrange next meeting</div>
+        <div class="task-meta">
+          <span>💼 Acquisition</span>
+          <span>💬 Jolanta very likely sending proposal this week; plan follow-up meeting to advance</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="105" onclick="toggleTyronTask(105)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Sit down with Priyanshu after WAKE — finalise Kate Willis portfolio report (add efficient frontier line)</div>
+        <div class="task-meta">
+          <span>👤 Priyanshu</span>
+          <span>💬 Turn the report into a reusable product; create redacted version for Ricardo pitch</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="106" onclick="toggleTyronTask(106)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Confirm all team using updated letterhead (FCA number now included) for all outgoing correspondence</div>
+        <div class="task-meta">
+          <span>⚖ Compliance</span>
+          <span>💬 Jolanta updated letterheads in Marketing folder — check SLs and SGIP letters include correct footer; confirm with Lisa (Thistle) if SLs need updating</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#1F3864; border:1.5px dashed rgba(31,56,100,0.45); border-radius:8px; margin-bottom:10px; background:rgba(31,56,100,0.06);">📋 WAKE Meeting — Monday 15 June 2026</div>
+
+  <div class="tyron-tasks">
+
+    <div class="task-card today" data-tyron-index="107" onclick="toggleTyronTask(107)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Call Simon Garnett — update him that EQ fossil fuel long-term average is ~3.7% (not the 0.x% shown in blended); discuss GIA options (Royal London or EQ unitised)</div>
+        <div class="task-meta">
+          <span>👤 Simon Garnett</span>
+          <span>💬 Jake confirmed Friday — need to relay before Simon makes any decisions</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="108" onclick="toggleTyronTask(108)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Chase Kate Bayliss — call her to progress replacement business</div>
+        <div class="task-meta">
+          <span>👤 Kate Bayliss</span>
+          <span>💬 Been chasing — try again today</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="109" onclick="toggleTyronTask(109)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Chase Gavin Christie meeting — aim to meet later this week to progress gilt/short-dated proposition</div>
+        <div class="task-meta">
+          <span>👤 Gavin Christie</span>
+          <span>💬 Post-divorce lump sum ~£300-500k; wants cautious 3-5yr deposit; Jake building gilt proposition; low touch so haircut on fees likely</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="110" onclick="toggleTyronTask(110)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Send Gene Magnus bank details for new GIA — she needs them to do the manual cash transfer</div>
+        <div class="task-meta">
+          <span>👤 Gene Magnus</span>
+          <span>💬 Pension and ISA will be done electronically; GIA cash transfer needs bank details sent manually</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="111" onclick="toggleTyronTask(111)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Send Ben IHT wording for Bakewell SL — needed for Kate to finish the suitability letter</div>
+        <div class="task-meta">
+          <span>👤 Bakewell</span>
+          <span>💬 Confirmed in meeting — get this done this morning</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card today" data-tyron-index="112" onclick="toggleTyronTask(112)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge today">⚡ Today</div>
+      <div class="task-body">
+        <div class="task-title">Email Andrew re Angela Varia bond — find out costs currently being paid; explore switching DFM (Canada Life product, Rathbones currently managing)</div>
+        <div class="task-meta">
+          <span>👤 Angela Varia</span>
+          <span>💬 Could switch investments inside the bond to 7iM — need to establish costs first</span>
+        </div>
+      </div>
+      <div class="task-due today-due">Today</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="113" onclick="toggleTyronTask(113)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Confirm Chris Jackson SL progress with Kate — get outstanding questions answered this week</div>
+        <div class="task-meta">
+          <span>👤 Chris Jackson</span>
+          <span>💬 Lots of questions to get back to Chris with before Kate can finish write-up</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="114" onclick="toggleTyronTask(114)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Book Azure setup session with Priyanshu — host Seedboard on Azure so team can access and update</div>
+        <div class="task-meta">
+          <span>👤 Priyanshu</span>
+          <span>💬 Priyanshu offered to do it from Tyron's account — find 15 mins this week or next</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="115" onclick="toggleTyronTask(115)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Confirm Alan Finn ISA details — find out if ISAs are cash or stocks &amp; shares; add to replacement register if needed</div>
+        <div class="task-meta">
+          <span>👤 Alan Finn</span>
+          <span>💬 Waiting for him to send back info — if cash ISAs, no LOA needed</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="116" onclick="toggleTyronTask(116)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Meet with Rhys (Focus Financial Planning) — proposal sent; progress acquisition conversation</div>
+        <div class="task-meta">
+          <span>💼 Acquisition</span>
+          <span>👤 Rhys</span>
+          <span>💬 Meeting next week</span>
+        </div>
+      </div>
+      <div class="task-due">Next week</div>
+    </div>
+
+    <div class="task-card upcoming" data-tyron-index="117" onclick="toggleTyronTask(117)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">Upcoming</div>
+      <div class="task-body">
+        <div class="task-title">Plan AI training programme — 3 sessions: client work, personal efficiency, central prompt management &amp; best practice</div>
+        <div class="task-meta">
+          <span>🤖 AI / Training</span>
+          <span>💬 Also: update data protection policy for clients (currently inadequate); create centralised templates for agendas, meeting notes, PDFs; finish legal framework review</span>
+        </div>
+      </div>
+      <div class="task-due">Upcoming</div>
+    </div>
+
+    <div class="task-card upcoming" data-tyron-index="118" onclick="toggleTyronTask(118)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">Upcoming</div>
+      <div class="task-body">
+        <div class="task-title">Attend Standard Life / Foresight seminar at The Shard — offshore bonds &amp; IHT products</div>
+        <div class="task-meta">
+          <span>📅 Wed 24 Jun</span>
+          <span>💬 Consider moving quarterly strategy meeting if clash</span>
+        </div>
+      </div>
+      <div class="task-due">Wed 24 Jun</div>
+    </div>
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#E67E22; border:1.5px dashed rgba(230,126,34,0.45); border-radius:8px; margin-bottom:10px; background:rgba(230,126,34,0.06);">📢 VouchedFor Campaign</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    <div class="task-card week" data-tyron-index="57" onclick="toggleTyronTask(57)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Send initial VouchedFor campaign email to agreed client list</div>
+        <div class="task-meta">
+          <span>📢 VouchedFor</span>
+          <span>💬 Catherine to handle follow-up once sent</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#C9A84C; border:1.5px dashed rgba(201,168,76,0.45); border-radius:8px; margin-bottom:10px; background:rgba(201,168,76,0.06);">📋 WAKE Meeting — Monday 20 April 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#27AE60; border:1.5px dashed rgba(39,174,96,0.45); border-radius:8px; margin-bottom:10px; background:rgba(39,174,96,0.06);">📋 Niamh Weekly Check — Tuesday 21 April 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#E91E63; border:1.5px dashed rgba(233,30,99,0.45); border-radius:8px; margin-bottom:10px; background:rgba(233,30,99,0.06);">📢 Marketing Strategy — Meeting 24 Apr 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#16A085; border:1.5px dashed rgba(22,160,133,0.45); border-radius:8px; margin-bottom:10px; background:rgba(22,160,133,0.06);">📢 Marketing Catch-Up — Catherine 23 Apr 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#27AE60; border:1.5px dashed rgba(39,174,96,0.45); border-radius:8px; margin-bottom:10px; background:rgba(39,174,96,0.06);">📋 Niamh &amp; Priyanshu Weekly Check — Tue 5 May 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    <div class="task-card week" data-tyron-index="73" onclick="toggleTyronTask(73)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Sit down with Priyanshu — build Ningi automation tracker / improvement register</div>
+        <div class="task-meta">
+          <span>👤 Priyanshu</span>
+          <span>🔗 Ningi</span>
+          <span>💬 Log everything not working in one place</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    
+
+    
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#16A085; border:1.5px dashed rgba(22,160,133,0.45); border-radius:8px; margin-bottom:10px; background:rgba(22,160,133,0.06);">📢 Marketing Catch-Up — Catherine 5 May 2026</div>
+
+  <div class="tyron-tasks">
+
+    <div class="task-card week" data-tyron-index="76" onclick="toggleTyronTask(76)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Send off the VouchedFor campaign email</div>
+        <div class="task-meta">
+          <span>📢 VouchedFor</span>
+          <span>💬 Triggers Catherine's client follow-up</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    
+
+    
+
+    <div class="task-card week" data-tyron-index="79" onclick="toggleTyronTask(79)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Come back to Catherine on the Mauritius / Global one-pager rework</div>
+        <div class="task-meta">
+          <span>👤 Catherine</span>
+          <span>📄 Mauritius one-pager</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="81" onclick="toggleTyronTask(81)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 Next Week</div>
+      <div class="task-body">
+        <div class="task-title">Meet Catherine — walk through Claude compliance framework &amp; data-protection log</div>
+        <div class="task-meta">
+          <span>👤 Catherine</span>
+          <span>⚖ Compliance</span>
+        </div>
+      </div>
+      <div class="task-due">Next week</div>
+    </div>
+
+    <div class="task-card week" data-tyron-index="82" onclick="toggleTyronTask(82)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge week">This Week</div>
+      <div class="task-body">
+        <div class="task-title">Send recent articles to Peter Riddlington for website upload — or test Ningi blog dashboard</div>
+        <div class="task-meta">
+          <span>👤 Peter Riddlington</span>
+          <span>📝 Blog</span>
+          <span>💬 Last website article was 13 Sept</span>
+        </div>
+      </div>
+      <div class="task-due">This week</div>
+    </div>
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#E91E63; border:1.5px dashed rgba(233,30,99,0.4); border-radius:8px; margin-bottom:10px; background:rgba(233,30,99,0.05);">📢 Weekly Marketing Meeting — Fri 8 May 2026</div>
+
+  <div class="tyron-tasks">
+    <div style="grid-column:1/-1; padding:14px 16px; font-size:13px; color:#6b6b6b; background:rgba(31,56,100,0.04); border-radius:8px;">No personal Tyron actions from this meeting — all actions assigned to Ben, Catherine, Niamh and Jolanta (see team blocks below).</div>
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#1F3864; border:1.5px dashed rgba(31,56,100,0.35); border-radius:8px; margin-bottom:10px; background:rgba(31,56,100,0.04);">📑 FCA Regulatory Returns</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#8E44AD; border:1.5px dashed rgba(142,68,173,0.35); border-radius:8px; margin-bottom:10px; background:rgba(142,68,173,0.05);">⚖ Thistle Compliance Review — Due 4 May 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="30" onclick="toggleTyronTask(30)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 4 May</div>
+      <div class="task-body">
+        <div class="task-title">Take forward DFM Authority document — 50-60 clients</div>
+        <div class="task-meta">
+          <span>📋 DFM / Client Agreements</span>
+          <span>🔗 Thistle Review</span>
+          <span>💬 Agent as Client / Reliance on Others · mix of in-person and Esign based on vulnerability · Thistle disclosure doc provided</span>
+        </div>
+      </div>
+      <div class="task-due">4 May 2026</div>
+    </div>
+
+    
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="33" onclick="toggleTyronTask(33)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 4 May</div>
+      <div class="task-body">
+        <div class="task-title">Take forward Annual Money Laundering Report</div>
+        <div class="task-meta">
+          <span>📋 AML</span>
+          <span>🔗 Thistle Review</span>
+          <span>💬 Draft from LC — review/amend with Thistle support now that firm-wide risk assessment is complete</span>
+        </div>
+      </div>
+      <div class="task-due">4 May 2026</div>
+    </div>
+
+    
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="36" onclick="toggleTyronTask(36)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 4 May</div>
+      <div class="task-body">
+        <div class="task-title">Take forward revised T&amp;C Plan (inc. Recruitment &amp; Selection)</div>
+        <div class="task-meta">
+          <span>📋 T&amp;C</span>
+          <span>🔗 Thistle Review</span>
+          <span>💬 Draft from LC 31/3 — incorporate Recruitment &amp; Selection process with more granular detail</span>
+        </div>
+      </div>
+      <div class="task-due">4 May 2026</div>
+    </div>
+
+    <div class="task-card upcoming" data-tyron-index="37" onclick="toggleTyronTask(37)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 4 May</div>
+      <div class="task-body">
+        <div class="task-title">Take forward T&amp;C Manual enhancement</div>
+        <div class="task-meta">
+          <span>📋 T&amp;C</span>
+          <span>🔗 Thistle Review</span>
+          <span>💬 More granular detail needed as team grows</span>
+        </div>
+      </div>
+      <div class="task-due">4 May 2026</div>
+    </div>
+
+    <div class="task-card upcoming" data-tyron-index="38" onclick="toggleTyronTask(38)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 4 May</div>
+      <div class="task-body">
+        <div class="task-title">Upload client files to SharePoint for Thistle file checks</div>
+        <div class="task-meta">
+          <span>📋 Client File Reviews</span>
+          <span>🔗 Thistle Review</span>
+          <span>💬 SharePoint link sent by LC on 8/4</span>
+        </div>
+      </div>
+      <div class="task-due">4 May 2026</div>
+    </div>
+
+  </div>
+
+  <div style="padding:8px 14px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:#2980B9; border:1.5px dashed rgba(41,128,185,0.35); border-radius:8px; margin-bottom:10px; background:rgba(41,128,185,0.05);">🏛 Board Meeting Actions — Next Board 12 May 2026</div>
+
+  <div class="tyron-tasks">
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="40" onclick="toggleTyronTask(40)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 Upcoming</div>
+      <div class="task-body">
+        <div class="task-title">Obtain competitive quotes for office / serviced space vs WeWork</div>
+        <div class="task-meta">
+          <span>📋 Premises</span>
+          <span>🔗 Board Actions · Ref 2</span>
+          <span>💬 Assess value for money versus current WeWork arrangement</span>
+        </div>
+      </div>
+      <div class="task-due">Upcoming</div>
+    </div>
+
+    
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="43" onclick="toggleTyronTask(43)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 Upcoming</div>
+      <div class="task-body">
+        <div class="task-title">Advance due diligence on Focus Financial Planning acquisition</div>
+        <div class="task-meta">
+          <span>📋 M&amp;A</span>
+          <span>🔗 Board Actions · Ref 6</span>
+        </div>
+      </div>
+      <div class="task-due">Upcoming</div>
+    </div>
+
+    
+
+    <div class="task-card upcoming" data-tyron-index="45" onclick="toggleTyronTask(45)">
+      <div class="task-checkbox"></div>
+      <div class="task-badge upcoming">📅 Upcoming</div>
+      <div class="task-body">
+        <div class="task-title">Undertake fee proposition review (benchmark vs competitors)</div>
+        <div class="task-meta">
+          <span>👤 With Ben Hayward</span>
+          <span>🔗 Board Actions · Ref 10</span>
+          <span>💬 Benchmark against competitor charges and service levels</span>
+        </div>
+      </div>
+      <div class="task-due">Upcoming</div>
+    </div>
+
+    
+
+    
+
+  </div>
+
+  <!-- OVERVIEW CHARTS -->
+  <div class="section-title">Team Overview</div>
+  <div class="two-col">
+
+    <!-- URGENCY BREAKDOWN -->
+    <div class="chart-card">
+      <h3>📊 Actions by Urgency — <span id="urgencyTitleTotal">80 Open Actions</span></h3>
+      <div class="urgency-row">
+        <div class="urgency-label" style="color:#E74C3C">Overdue/ASAP</div>
+        <div class="urgency-bar-wrap">
+          <div class="urgency-bar urg-urgent" style="width: 42.8571%;">3 actions</div>
+        </div>
+        <div class="urgency-count" style="color:#E74C3C">3</div>
+      </div>
+      <div class="urgency-row">
+        <div class="urgency-label" style="color:#F39C12">Due Today</div>
+        <div class="urgency-bar-wrap">
+          <div class="urgency-bar urg-today" style="width: 62.5%;">5 actions</div>
+        </div>
+        <div class="urgency-count" style="color:#F39C12">5</div>
+      </div>
+      <div class="urgency-row">
+        <div class="urgency-label" style="color:#3498DB">This Week</div>
+        <div class="urgency-bar-wrap">
+          <div class="urgency-bar urg-week" style="width: 94.5455%;">52</div>
+        </div>
+        <div class="urgency-count" style="color:#3498DB">52</div>
+      </div>
+      <div class="urgency-row">
+        <div class="urgency-label" style="color:#27AE60">Upcoming</div>
+        <div class="urgency-bar-wrap">
+          <div class="urgency-bar urg-upcoming" style="width: 90.4762%;">19</div>
+        </div>
+        <div class="urgency-count" style="color:#27AE60">19</div>
+      </div>
+      <div class="urgency-row">
+        <div class="urgency-label" style="color:#95A5A6">Ongoing</div>
+        <div class="urgency-bar-wrap">
+          <div class="urgency-bar urg-ongoing" style="width: 100%;">1</div>
+        </div>
+        <div class="urgency-count" style="color:#95A5A6">1</div>
+      </div>
+      <div style="margin-top:16px; padding-top:14px; border-top:1px solid #F0F3F8; font-size:12px; color:#888;" id="urgencySummary">⚡ <strong style="color:#E74C3C">10% of remaining actions</strong> are either overdue or due today</div>
+    </div>
+
+    <!-- TEAM WORKLOAD -->
+    <div class="chart-card">
+      <h3>👥 Actions per Team Member</h3>
+      <div class="team-grid">
+
+        <div class="person-row" id="personRowCatherine" data-person-key="catherine">
+          <div class="person-avatar" style="background:#8E44AD">C</div>
+          <div class="person-name">Catherine</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 56.6667%; background: linear-gradient(90deg, rgb(142, 68, 173), rgb(108, 52, 131));">17</div>
+          </div>
+          <div class="person-count">17</div>
+        </div>
+
+        <div class="person-row" id="personRowNiamh" data-person-key="niamh">
+          <div class="person-avatar" style="background:#27AE60">N</div>
+          <div class="person-name">Niamh</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 86.6667%; background: linear-gradient(90deg, rgb(39, 174, 96), rgb(30, 132, 73));">26</div>
+          </div>
+          <div class="person-count">26</div>
+        </div>
+
+        <div class="person-row" id="personRowPriyanshu" data-person-key="priyanshu">
+          <div class="person-avatar" style="background:#E67E22">P</div>
+          <div class="person-name">Priyanshu</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 100%; background: linear-gradient(90deg, rgb(230, 126, 34), rgb(202, 111, 30));">30</div>
+          </div>
+          <div class="person-count">30</div>
+        </div>
+
+        <div class="person-row" id="personRowTyron" data-person-key="tyron">
+          <div class="person-avatar" style="background:#1F3864">T</div>
+          <div class="person-name">Tyron</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 100%; background: linear-gradient(90deg, rgb(31, 56, 100), rgb(44, 79, 140));">50 actions</div>
+          </div>
+          <div class="person-count">50</div>
+        </div>
+
+        <div class="person-row" id="personRowBen" data-person-key="ben">
+          <div class="person-avatar" style="background:#2980B9">B</div>
+          <div class="person-name">Ben</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 50%; background: linear-gradient(90deg, rgb(41, 128, 185), rgb(26, 111, 160));">15</div>
+          </div>
+          <div class="person-count">15</div>
+        </div>
+
+        <div class="person-row" id="personRowKate" data-person-key="kate">
+          <div class="person-avatar" style="background:#E91E63">K</div>
+          <div class="person-name">Kate</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 56.6667%; background: linear-gradient(90deg, rgb(233, 30, 99), rgb(194, 24, 91));">17</div>
+          </div>
+          <div class="person-count">17</div>
+        </div>
+
+        <div class="person-row" id="personRowJolanta" data-person-key="jolanta">
+          <div class="person-avatar" style="background:#16A085">J</div>
+          <div class="person-name">Jolanta</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 40%; background: linear-gradient(90deg, rgb(22, 160, 133), rgb(18, 132, 109));">12</div>
+          </div>
+          <div class="person-count">12</div>
+        </div>
+
+        <div class="person-row" id="personRowShared" data-person-key="shared">
+          <div class="person-avatar" style="background:#7F8C8D; font-size:10px">N/P</div>
+          <div class="person-name">Niamh / P</div>
+          <div class="person-bar-wrap">
+            <div class="person-bar" style="width: 3.7037%; background: linear-gradient(90deg, rgb(127, 140, 141), rgb(98, 101, 103));">1</div>
+          </div>
+          <div class="person-count">1</div>
+        </div>
+
+      </div>
+      <div style="margin-top:16px; padding-top:14px; border-top:1px solid #F0F3F8; font-size:12px; color:#888;" id="teamSummary">🏆 <strong style="color:#1F3864">Tyron</strong> now carries the most actions (50)</div>
+    </div>
+  </div>
+
+  <!-- TEAM DETAIL -->
+  <div class="section-title">Team Actions Detail</div>
+  <div class="team-section">
+
+    <!-- Catherine -->
+    <div class="person-block">
+      <div class="person-header" style="background:#F8F0FF">
+        <div class="avatar" style="background:#8E44AD">C</div>
+        <div class="info">
+          <h3 style="color:#8E44AD">Catherine</h3>
+          <p>Marketing Lead · Webinar, events, LinkedIn campaigns, client reviews</p>
+        </div>
+        <div class="count">16 actions</div>
+      <button type="button" class="add-task-btn" title="Add task for Catherine" onclick="event.stopPropagation();openAddTaskModal('catherine')">+ Add</button></div>
+      <div class="task-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#C9A84C; border-top:1px dashed #F0E6C8; margin-top:4px;">📋 WAKE Meeting — Mon 20 Apr</div>
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#E67E22; border-top:1px dashed #F5D7B8; margin-top:4px;">📢 VouchedFor Campaign</div>
+        <div class="task-row" data-task-index="catherine-23" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Follow up with clients on VouchedFor campaign (after Tyron's initial email)</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#E91E63; border-top:1px dashed #F5C6D9; margin-top:4px;">📢 Marketing Strategy — Thu 24 Apr</div>
+        <div class="task-row" data-task-index="catherine-24" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Build lead-magnet PDF + LinkedIn / Instagram / Facebook landing page (capture details, then phone follow-up; Fiverr help)</div><div class="task-row-due due-week">This week</div></div>
+        
+        
+        <div class="task-row" data-task-index="catherine-27" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-ongoing"></div><div class="task-row-text">Continue Yola job-title testing (director of sales etc.); mix men back into outreach</div><div class="task-row-due due-ongoing">Ongoing</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16A085; border-top:1px dashed #B7E4D7; margin-top:4px;">📢 Marketing Catch-Up — Thu 23 Apr</div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="task-row" data-task-index="catherine-35" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Schedule intro meeting with Jules Anderson (Wealth Canopy) — kick off article collaboration</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div class="task-row" data-task-index="catherine-36" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Re-approach Ian Price re moving July webinar to end of September (avoid summer clash)</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div class="task-row" data-task-index="catherine-37" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Rework Mauritius/global one-pager brochure — lead with global reach, consider Treasure Wealth co-branding, shorten bullets</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div class="task-row" data-task-index="catherine-38" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Book in Hanufa Begum</div><div class="task-row-due due-week">Fri 1 May</div></div>
+        <div class="task-row" data-task-index="catherine-39" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Prepare full list of clients we are connected to + list of prospects in our campaigns (data protection)</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="catherine-40" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Update blogs on website</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#16A085; border-top:1px dashed #B7E4D7; margin-top:4px;">📢 Marketing Catch-Up — Mon 5 May</div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="task-row" data-task-index="catherine-48" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Confirm Vicky as November event speaker and approach Emma Tomlinson</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        
+        
+        
+        <div class="task-row" data-task-index="catherine-52" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Pivot lead magnet from 'tax trap' (saturated) to buy-to-let landlords selling up due to new legislation</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="catherine-53" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Test buy-to-let landlord guidebook draft in Claude using existing Acacia brochure as template</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="catherine-54" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Post ad to hire someone to build lead-magnet landing page / ad set-up (kit.com integration)</div><div class="task-row-due due-week">This week</div></div>
+        
+        
+        
+        
+        <div class="task-row" data-task-index="catherine-59" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Check with Stefan (Zikio) how to export full connection / prospect list to Excel for compliance log</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="catherine-60" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Chase Nick Baron prospect — booking / next step (significant AUM potential)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="catherine-61" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Sensitively check in with Simon Mann (poor health — gauge status before pushing)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="catherine-62" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-urgent"></div><div class="task-row-text">Send tube strike info email to Wednesday dinner guests — confirm which lines are running to London Bridge</div><div class="task-row-due due-urgent">Today</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#E91E63; border-top:1px dashed #F5C6D9; margin-top:4px;">📢 Marketing Meeting — Fri 8 May</div>
+        
+      </div>
+    </div>
+
+    <!-- Niamh -->
+    <div class="person-block">
+      <div class="person-header" style="background:#E8F8E8">
+        <div class="avatar" style="background:#27AE60">N</div>
+        <div class="info">
+          <h3 style="color:#27AE60">Niamh</h3>
+          <p>Operations · LOA schedule, Ningi, business register, SL cases</p>
+        </div>
+        <div class="count">13 actions</div>
+      <button type="button" class="add-task-btn" title="Add task for Niamh" onclick="event.stopPropagation();openAddTaskModal('niamh')">+ Add</button></div>
+      <div class="task-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#C9A84C; border-top:1px dashed #F0E6C8; margin-top:4px;">📋 WAKE Meeting — Mon 20 Apr</div>
+        
+        
+        
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#27AE60; border-top:1px dashed #BFE3C7; margin-top:4px;">📋 Niamh Weekly Check — Tue 21 Apr</div>
+        
+        
+        
+        
+        
+        
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#E91E63; border-top:1px dashed #F5C6D9; margin-top:4px;">📢 Marketing Strategy — Thu 24 Apr</div>
+        
+          <div class="task-row" data-task-index="niamh-26" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Archive old clients</div><div class="task-row-due due-week">Fri 22 May</div></div>
+          <div class="task-row" data-task-index="niamh-27" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Set up SharePoint site for new joiners</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="niamh-28" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Follow up with Jamie at Ningi re portfolio valuation / expectation link (improvement-register issue)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="niamh-29" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Speak to Catherine about Wealth Canopy</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="niamh-30" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Check Yola's clients are booked to her on Ningi as advisor (run AUM report grouped by advisor)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="niamh-31" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Identify unmapped clients in Ningi &amp; send list to Tyron for ownership</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="niamh-32" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Save Canada Life surrender chronology doc + adopt as bereavement / life-policy template</div><div class="task-row-due due-week">This week</div></div>
+          
+          <div class="task-row" data-task-index="niamh-34" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Replicate Yola's onboarding programme for James Tomlinson (start 6 Jul) — schedule training &amp; role plays</div><div class="task-row-due due-week">This week</div></div>
+          
+          <div class="task-row" data-task-index="niamh-36" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Chase Rob McAllister's parents for LOA signatures (review meeting 29th)</div><div class="task-row-due due-week">This week</div></div>
+          
+          <div class="task-row" data-task-index="niamh-38" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Chase Richard Spencer for wet-signature LOA</div><div class="task-row-due due-week">This week</div></div>
+          
+          <div class="task-row" data-task-index="niamh-40" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Get Gene Magnus pension info from Origo portal (handed over from Priyanshu)</div><div class="task-row-due due-week">This week</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#27AE60; border-top:1px dashed #B7E4D7; margin-top:4px;">📋 Weekly Check — Tue 5 May</div>
+        
+        
+        
+        
+        
+        
+      <div class="task-row" data-task-index="niamh-41" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-week"></div>
+      <div class="task-row-text">Reconcile New Business Register Fees</div>
+      <div class="task-row-due due-week">This week</div>
+    </div><div class="task-row" data-task-index="niamh-42" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-week"></div>
+      <div class="task-row-text">Contract Note email from Mike Wiles</div>
+      <div class="task-row-due due-week">This week</div>
+    </div>
+    <div class="task-row" data-task-index="niamh-43" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Upload induction materials to SharePoint for James Tomlinson onboarding (joining 6 Jul)</div><div class="task-row-due due-week">This week</div></div>
+    <div class="task-row" data-task-index="niamh-44" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Follow up Dean Begum re KYC — chased early May, no response yet</div><div class="task-row-due due-week">This week</div></div>
+    <div class="task-row" data-task-index="niamh-45" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Update consolidated LOA schedule and live Monday board</div><div class="task-row-due due-week">This week</div></div>
+    <div class="task-row" data-task-index="niamh-46" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Ask Catherine when she last contacted the Tills — chase if overdue</div><div class="task-row-due due-week">This week</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 8 Jun</div>
+        <div class="task-row" data-task-index="niamh-47" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Chase Robbie Laidlaw — confirm he's updated his Nest address, then resubmit LOA</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="niamh-48" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Post Clerical Medical LOA to Corne if meeting is confirmed as virtual (await Jolanta's confirmation)</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="niamh-49" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Book pension checklist session with Priyanshu for Angela Bassi</div><div class="task-row-due due-week">This week</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 15 Jun</div>
+        <div class="task-row" data-task-index="niamh-50" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Call Robbie Laidlaw — confirm he's updated his Nest address, then resubmit LOA</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="niamh-51" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Send Sam Cook the Clerical Medical LOA — ask him to print, sign and scan back (wet signature accepted as scan)</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="niamh-52" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Move Bolton SL back to top of Monday board — not yet sent, needs to be chased this week</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="niamh-53" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Add Gavin Christie to Monday board — pencil in Wednesday meeting date</div><div class="task-row-due due-week">Today</div></div>
+        <div class="task-row" data-task-index="niamh-54" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Add Alan Finn (x2 ISAs) to replacement register once Tyron confirms details</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="niamh-55" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Add Mike &amp; Gina Wiles ISA top-ups to cash business register</div><div class="task-row-due due-week">This week</div></div>
+    </div></div>
+    </div>
+
+    <!-- Priyanshu -->
+    <div class="person-block">
+      <div class="person-header" style="background:#FFF8F0">
+        <div class="avatar" style="background:#E67E22">P</div>
+        <div class="info">
+          <h3 style="color:#E67E22">Priyanshu</h3>
+          <p>Operations · LOA chasing, Monday board, client tasks, SharePoint</p>
+        </div>
+        <div class="count">16 actions</div>
+      <button type="button" class="add-task-btn" title="Add task for Priyanshu" onclick="event.stopPropagation();openAddTaskModal('priyanshu')">+ Add</button></div>
+      <div class="task-list">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#C9A84C; border-top:1px dashed #F0E6C8; margin-top:4px;">📋 WAKE Meeting — Mon 20 Apr</div>
+        
+        
+        <div class="task-row" data-task-index="priyanshu-12" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Process Purse House ISA withdrawal</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="priyanshu-13" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Chase Canada Life for Stockwin</div><div class="task-row-due due-today">Today</div></div>
+        
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#E91E63; border-top:1px dashed #F5C6D9; margin-top:4px;">📢 Marketing Strategy — Thu 24 Apr</div>
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#27AE60; border-top:1px dashed #B7E4D7; margin-top:4px;">📋 Weekly Check — Tue 5 May</div>
+        
+        <div class="task-row" data-task-index="priyanshu-19" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-urgent"></div><div class="task-row-text">Circulate Kate's provider cheat-sheet to Niamh (for LOA sending while Priyanshu away)</div><div class="task-row-due due-urgent">ASAP</div></div>
+        
+        
+        <div class="task-row" data-task-index="priyanshu-22" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Give Niamh a crash course in Claude</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div class="task-row" data-task-index="priyanshu-23" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Book diary time with Tyron for Ningi automation tracker session</div><div class="task-row-due due-week">This week</div></div>
+        
+        
+        
+          <div class="task-row" data-task-index="priyanshu-27" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Add research for Noga</div><div class="task-row-due due-week">This week</div></div>
+      <div class="task-row" data-task-index="priyanshu-28" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-today"></div>
+      <div class="task-row-text">Generate 7IM quarterly report pack for Michael Sorrell</div>
+      <div class="task-row-due due-today">Tue 21 Apr</div>
+    </div>
+          <div class="task-row" data-task-index="priyanshu-29" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Send forms to Anthony McCord for wet signature (Aegon transfer)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="priyanshu-30" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Fill in LOA for Corne and upload to Aviva</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="priyanshu-31" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">List all Bakewell assets in assets table with probate status (e.g., 'in probate')</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="priyanshu-32" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Prepare for APS transfer (Freeman's estate → Maureen's accounts) once probate granted</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+          <div class="task-row" data-task-index="priyanshu-33" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Process £50k withdrawal from Maureen Bakewell's ISA</div><div class="task-row-due due-week">This week</div></div><div class="task-row" data-task-index="priyanshu-34" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-urgent"></div>
+      <div class="task-row-text">Call Aviva re Chaddock Valuation</div>
+      <div class="task-row-due due-urgent">ASAP</div>
+    </div><div class="task-row" data-task-index="priyanshu-35" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-week"></div>
+      <div class="task-row-text">Do handover for Ben Stafford</div>
+      <div class="task-row-due due-week">This week</div>
+    </div><div class="task-row" data-task-index="priyanshu-36" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-week"></div>
+      <div class="task-row-text">Document existing Noga address research (mirror Liz / Roland analysis) — save to client file</div>
+      <div class="task-row-due due-week">This week</div>
+    </div><div class="task-row" data-task-index="priyanshu-37" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-week"></div>
+      <div class="task-row-text">Data research for Kate Bayliss</div>
+      <div class="task-row-due due-week">This week</div>
+    </div>
+    <div class="task-row" data-task-index="priyanshu-38" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Pull together 7iM and HFL model portfolios for Neil (fund range request re Colin Corner / Aviva case)</div><div class="task-row-due due-week">This week</div></div>
+    <div class="task-row" data-task-index="priyanshu-39" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Pull together Bakewell timeline of events and send to Ben so he can respond to client</div><div class="task-row-due due-week">This week</div></div>
+    <div class="task-row" data-task-index="priyanshu-40" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Review HFL data/reporting output and identify what reporting we can build from it</div><div class="task-row-due due-week">This week</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 8 Jun</div>
+        <div class="task-row" data-task-index="priyanshu-41" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Dial into EQ meeting — come prepared with agenda/questions on portfolio performance, changes made, and benchmark vs Royal London</div><div class="task-row-due due-today">Today / Tue</div></div>
+        <div class="task-row" data-task-index="priyanshu-42" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Send EQ contact (Alison) an agenda in advance of tomorrow's meeting</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="priyanshu-43" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Sit with Jolanta post-WAKE — add efficient frontier line to Kate Willis portfolio report; develop into reusable product</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-44" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Book diary time with Jolanta to discuss Arthur estate / trust planning — consider looping in Craig Wilson</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-45" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Book session with Niamh to run pension checklists for Angela Bassi (review due May)</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-46" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Prep for Kevin &amp; Margaret Cocker review (Jolanta meeting tomorrow) — check EQ performance, pull 7iM report, consider Royal London World Trust as potential switch</div><div class="task-row-due due-week">Today / Tue</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 15 Jun</div>
+        <div class="task-row" data-task-index="priyanshu-47" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Complete Mike Wiles review prep — Austin prep done last week; Wiles to be done today</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="priyanshu-48" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Complete Angela Bassi pension transfer checklist — both pensions have lifestyling; Scottish Widows has accidental death cover (minor issue, ~£1,500 pot)</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-49" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Pre-populate Yusuf protection forms and send facts/documentation to client</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-50" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Chase Kevin &amp; Margaret Cocker KYC — handover to Kate not done yet pending KYC confirmation</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-51" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Drop EQ a message — ask when they are launching the unitised version of their fund</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="priyanshu-52" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Book Azure setup session with Tyron — host Seedboard on Azure from Tyron's account</div><div class="task-row-due due-upcoming">This week / next</div></div>
+    </div></div>
+    </div>
+
+    <!-- Ben -->
+    <div class="person-block">
+      <div class="person-header" style="background:#E1F5FE">
+        <div class="avatar" style="background:#2980B9">B</div>
+        <div class="info">
+          <h3 style="color:#2980B9">Ben</h3>
+          <p>Adviser</p>
+        </div>
+        <div class="count">8 actions</div>
+      <button type="button" class="add-task-btn" title="Add task for Ben" onclick="event.stopPropagation();openAddTaskModal('ben')">+ Add</button></div>
+      <div class="task-list">
+        
+        
+        
+        <div class="task-row" data-task-index="ben-5" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Final call to Nick Baron</div><div class="task-row-due due-today">Today</div></div>
+        
+        
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#E91E63; border-top:1px dashed #F5C6D9; margin-top:4px;">📢 Marketing Mtg — Fri 8 May</div>
+        
+        
+        
+        
+        <div class="task-row" data-task-index="ben-10" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Ask Leah re reaching Emma Tomlinson for November speaker slot</div><div class="task-row-due due-upcoming">Upcoming</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#27AE60; border-top:1px dashed #B7E4D7; margin-top:4px;">📋 Weekly Check — Tue 5 May</div>
+        <div class="task-row" data-task-index="ben-11" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Resolve Simon Brown's 148 segments / 3 beneficiaries split before client signs</div><div class="task-row-due due-week">This week</div></div>
+        
+        <div class="task-row" data-task-index="ben-13" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Send factfind to Corne plus details of pension scheme</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="ben-14" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Review &amp; send fee explanation email, SL, and related docs to Simon Brown; follow up</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="ben-15" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Review &amp; update correspondence/notes from previous meetings — Bakewell &amp; Brown case</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="ben-16" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Communicate with Bakewells re IHT implications of £50k withdrawal</div><div class="task-row-due due-week">This week</div></div>
+      <div class="task-row" data-task-index="ben-17" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-week"></div>
+      <div class="task-row-text">Mike and Gina response re ISAs</div>
+      <div class="task-row-due due-week">This week</div>
+    </div>
+    <div class="task-row" data-task-index="ben-18" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Send Bakewell timeline of events (from Priyanshu) and set up short call to explain delay</div><div class="task-row-due due-week">This week</div></div>
+    <div class="task-row" data-task-index="ben-19" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Sit with Tyron on Thursday to work on Juliet Brown SL</div><div class="task-row-due due-week">Thu 4 Jun</div></div>
+    <div class="task-row" data-task-index="ben-20" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Run Alan Eaton meeting as a review (Friday — review date was 24 May)</div><div class="task-row-due due-week">Fri 5 Jun</div></div>
+    <div class="task-row" data-task-index="ben-21" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Get Garland to sign GAA folder at Wednesday dinner (if he attends)</div><div class="task-row-due due-week">Wed 3 Jun</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 8 Jun</div>
+        <div class="task-row" data-task-index="ben-22" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Confirm cash savings figure for Boltons — feed back to Kate to finalise SL</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="ben-23" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Book meeting with Christopher Jackson to confirm he's happy with Aviva recommendation and talk through everything before write-up</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="ben-24" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Attend EQ stakeholder meeting (dial-in) — contribute to performance review discussion</div><div class="task-row-due due-week">Tue 9 Jun</div></div>
+    </div></div>
+    </div>
+
+    <!-- Kate -->
+    <div class="person-block">
+      <div class="person-header" style="background:#FCE4EC">
+        <div class="avatar" style="background:#E91E63">K</div>
+        <div class="info">
+          <h3 style="color:#E91E63">Kate</h3>
+          <p>Compliance / SLs</p>
+        </div>
+        <div class="count">5 actions</div>
+      <button type="button" class="add-task-btn" title="Add task for Kate" onclick="event.stopPropagation();openAddTaskModal('kate')">+ Add</button></div>
+      <div class="task-list">
+        <div class="task-row" data-task-index="kate-1" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Redo Maureen Bakewell SL — include £50k ISA withdrawal as PET, note probate status</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-2" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Update Bakewell SL — current recommendations &amp; changes since last review (Freeman's passing)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="kate-3" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Write up Michael Sorrell review SL (handover pending Priyanshu)</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="kate-4" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Write up Carol Bolton review SL</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="kate-5" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Write up Chadwick review SL</div><div class="task-row-due due-week">This week</div></div>
+          <div class="task-row" data-task-index="kate-6" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-urgent"></div><div class="task-row-text">Write up Chris Jackson SL — discounted gift trust + bonds + CIP; previous SL (life cover) is scrapped</div><div class="task-row-due due-urgent">This week</div></div>
+          <div class="task-row" data-task-index="kate-7" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-urgent"></div><div class="task-row-text">Ben Stafford handover — check and prepare (was off last week)</div><div class="task-row-due due-urgent">Today</div></div>
+          <div class="task-row" data-task-index="kate-8" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Add meeting date and due dates for Elizabeth Lapthorn and Michael Sorrell on Monday board</div><div class="task-row-due due-week">This week</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 8 Jun</div>
+        <div class="task-row" data-task-index="kate-9" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Check all SLs and SGIP letters use updated letterhead with FCA number — flag any that need updating</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="kate-10" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Confirm outstanding queries on Gene Magnus SL are resolved — send amended SL (NatWest cash ISA, zero charges)</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-11" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Finalise Bolton SL — confirm Ben's cash savings figure, update and send to Tyron for review</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-12" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Progress Bakewell SL — check what's blocking write-up; liaise with Priyanshu re SIP transfer inclusion</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-13" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-urgent"></div><div class="task-row-text">Send Elizabeth Lapthorn handover to Priyanshu (overdue since 28 May)</div><div class="task-row-due due-urgent">ASAP</div></div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 15 Jun</div>
+        <div class="task-row" data-task-index="kate-14" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Write rough SL for Phil Kimpton — lump sum into ISA and GIA (7iM Path Builder for GIA); straightforward case</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-15" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Finish Chris Jackson SL — await outstanding questions from Tyron then complete write-up</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-16" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Finalise and send Bolton SL — not yet sent; move back up priority list</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="kate-17" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Pick up Kevin &amp; Margaret Cocker SL — once Priyanshu confirms KYC and sends handover</div><div class="task-row-due due-week">This week</div></div>
+      </div>
+    </div>
+
+    <!-- Jolanta -->
+    <div class="person-block">
+      <div class="person-header" style="background:#E0F7F4">
+        <div class="avatar" style="background:#16A085">J</div>
+        <div class="info">
+          <h3 style="color:#16A085">Jolanta</h3>
+          <p>Adviser</p>
+        </div>
+        <div class="count">12 actions</div>
+      <button type="button" class="add-task-btn" title="Add task for Jolanta" onclick="event.stopPropagation();openAddTaskModal('jolanta')">+ Add</button></div>
+      <div class="task-list">
+      <div class="task-row" data-task-index="jolanta-0" onclick="toggleTask(event)">
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-upcoming"></div>
+      <div class="task-row-text">Schedule 30-minute intro meeting with Jules Anderson — Wealth Canopy collaboration / first joint article</div>
+      <div class="task-row-due due-upcoming">Upcoming</div>
+    </div>
+        <div style="padding:5px 10px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#1F3864; border-top:1px dashed #B0BEC5; margin-top:4px;">📋 WAKE Meeting — Mon 8 Jun</div>
+        <div class="task-row" data-task-index="jolanta-1" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Send out Focus Financial Planning proposal this week — arrange follow-up meeting</div><div class="task-row-due due-today">This week</div></div>
+        <div class="task-row" data-task-index="jolanta-2" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Kevin &amp; Margaret Cocker review meeting (EQ performance, possible Royal London World Trust switch)</div><div class="task-row-due due-today">Tue 9 Jun</div></div>
+        <div class="task-row" data-task-index="jolanta-3" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Meet Noga's son Zohar — first meeting Wednesday</div><div class="task-row-due due-week">Wed 11 Jun</div></div>
+        <div class="task-row" data-task-index="jolanta-4" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">First meeting Thursday (new prospect)</div><div class="task-row-due due-week">Thu 12 Jun</div></div>
+        <div class="task-row" data-task-index="jolanta-5" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-today"></div><div class="task-row-text">Chase Richard Spencer for LOA — give him a nudge today re Interactive Investor wet-signature form</div><div class="task-row-due due-today">Today</div></div>
+        <div class="task-row" data-task-index="jolanta-6" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Meet James Tomlinson this week — kick off marketing prep before 6 Jul start</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="jolanta-7" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Contact Cotton (Birmingham) ahead of joint review meeting next week — ensure no surprises; confirm Jolanta attends too</div><div class="task-row-due due-week">Next week</div></div>
+        <div class="task-row" data-task-index="jolanta-8" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Sit down with Ben and Priyanshu on Juliet Brown SL — send prep emails so we can move forward</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="jolanta-9" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Try calling Simon Mann again — health situation; Catherine not getting through; approach sensitively</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="jolanta-10" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-week"></div><div class="task-row-text">Give Robbie Laidlaw a kick — ensure he's updated Nest address before Niamh resubmits LOA</div><div class="task-row-due due-week">This week</div></div>
+        <div class="task-row" data-task-index="jolanta-11" onclick="toggleTask(event)"><div class="task-row-checkbox"></div><div class="task-dot dot-upcoming"></div><div class="task-row-text">Oversee DFM Authority / Reliance on Others document programme — 50-60 clients to sign over ~12 months; draft layman's cover letter; train team on explanation</div><div class="task-row-due due-upcoming">12-month programme</div></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer" id="footerText">Acacia Wealth — Actions Dashboard · Generated 16 April 2026, updated 15 June 2026 · 167 open actions across 7 team members</div>
+
+<!-- ADD TASK MODAL -->
+<div class="add-task-overlay" id="addTaskOverlay" onclick="if(event.target===this)closeAddTaskModal()">
+  <div class="add-task-modal">
+    <div class="add-task-modal-header">
+      <div class="at-avatar" id="addTaskAvatar" style="background: rgb(230, 126, 34);">P</div>
+      <h2 id="addTaskModalTitle">Add task — Priyanshu</h2>
+    </div>
+    <div class="add-task-field">
+      <label for="addTaskInput">Task description</label>
+      <input type="text" id="addTaskInput" placeholder="Describe the action…" onkeydown="if(event.key==='Enter')submitAddTask()">
+    </div>
+    <div class="add-task-field">
+      <label for="addTaskUrgency">Priority / timing</label>
+      <select id="addTaskUrgency">
+        <option value="urgent">⚠ ASAP / Overdue</option>
+        <option value="today">⚡ Today</option>
+        <option value="week" selected="">📅 This Week</option>
+        <option value="upcoming">🗓 Upcoming</option>
+        <option value="ongoing">🔄 Ongoing</option>
+      </select>
+    </div>
+    <div class="add-task-field">
+      <label for="addTaskDue">Due date label <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional — e.g. Fri 30 May, 2 Jun)</span></label>
+      <input type="text" id="addTaskDue" placeholder="Leave blank to use the timing above…">
+    </div>
+    <div class="add-task-actions">
+      <button class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
+      <button class="btn-submit" onclick="submitAddTask()">Add Task</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Store removed elements so Reset All can restore them
+  // Each entry: { el, parent, nextSibling }
+  const removed = [];
+
+  // Computed once on load
+  let TOTAL_TASKS = 0;
+  let completedCount = 0;
+
+  // ── PERSISTENCE (localStorage so ticks survive page reload) ────────────────
+  const STORAGE_KEY = 'acacia-dashboard-completed-v1';
+
+  function taskIdOf(el) {
+    if (el && el.dataset && el.dataset.origTyronIndex) return 'tyron-' + el.dataset.origTyronIndex;
+    if (el && el.dataset && el.dataset.origTaskIndex)  return el.dataset.origTaskIndex;
+    return null;
+  }
+
+  function saveProgress() {
+    const ids = [];
+    const seen = new Set();
+    removed.forEach(r => {
+      // Only persist IDs for primary task elements (cards/rows), not their twin timeline items.
+      if (!r.el) return;
+      if (!(r.el.classList && (r.el.classList.contains('task-card') || r.el.classList.contains('task-row')))) return;
+      const id = taskIdOf(r.el);
+      if (id && !seen.has(id)) { seen.add(id); ids.push(id); }
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+
+  function copyTicksToClaude() {
+    const ids = new Set();
+    removed.forEach(r => {
+      if (!r.el || !r.el.classList) return;
+      if (!(r.el.classList.contains('task-card') || r.el.classList.contains('task-row'))) return;
+      const id = taskIdOf(r.el);
+      if (id) ids.add(id);
+    });
+    loadProgress().forEach(id => ids.add(id));
+    const list = [...ids];
+    if (list.length === 0) {
+      showCopyToast(0, 'No ticked items yet — tick some tasks first, then click Copy ticks again.');
+      return;
+    }
+    const message = 'Mark these as done and save: ' + list.join(', ');
+    const onCopied = () => showCopyToast(list.length, 'Paste into your Claude chat to bake these as the new baseline.');
+    const onFail   = () => { window.prompt('Copy the line below and paste it into Claude:', message); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(message).then(onCopied).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = message; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); onCopied(); } catch (e) { onFail(); }
+        document.body.removeChild(ta);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = message; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); onCopied(); } catch (e) { onFail(); }
+      document.body.removeChild(ta);
+    }
+  }
+
+  function showCopyToast(count, msg) {
+    const old = document.querySelector('.save-toast');
+    if (old) old.remove();
+    const t = document.createElement('div');
+    t.className = 'save-toast';
+    const title = count > 0
+      ? ('📋 Copied ' + count + ' tick' + (count === 1 ? '' : 's') + ' to clipboard')
+      : '📋 Nothing to copy';
+    t.innerHTML = '<div class="toast-title">' + title + '</div>' + (msg || '');
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('visible'));
+    setTimeout(() => {
+      t.classList.remove('visible');
+      setTimeout(() => t.remove(), 400);
+    }, 5000);
+  }
+
+  function clearProgress() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) { /* noop */ }
+  }
+
+  // Fixed scales for bar widths — captured on load so bars visibly shrink as tasks are ticked off.
+  const INITIAL = {
+    urgency: { urgent: 0, today: 0, week: 0, upcoming: 0, ongoing: 0 },
+    person:  { catherine: 0, niamh: 0, priyanshu: 0, tyron: 0, ben: 0, kate: 0, shared: 0 },
+    personBlockMax: 0,
+  };
+
+  // ── COUNTERS ────────────────────────────────────────────────────────────────
+  function countTyronCards() {
+    return document.querySelectorAll('.task-card[data-tyron-index]').length;
+  }
+  function countTyronByClass(cls) {
+    return document.querySelectorAll('.task-card.' + cls + '[data-tyron-index]').length;
+  }
+  function countTaskRows() {
+    return document.querySelectorAll('.task-row[data-task-index]').length;
+  }
+  function countRowsByDot(dotClass) {
+    return document.querySelectorAll('.task-row[data-task-index] .task-dot.' + dotClass).length;
+  }
+  function countRowsByPrefix(prefix) {
+    return document.querySelectorAll('.task-row[data-task-index^="' + prefix + '-"]').length;
+  }
+  function countRemainingTotal() {
+    return countTyronCards() + countTaskRows();
+  }
+
+  // ── RENDERERS ───────────────────────────────────────────────────────────────
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function updateUrgencyRow(cls, count, initialMax, barLabel) {
+    const bar = document.querySelector('.urgency-bar.' + cls);
+    if (!bar) return;
+    const row = bar.closest('.urgency-row');
+    const pct = initialMax ? Math.min(100, (count / initialMax) * 100) : 0;
+    bar.style.width = pct + '%';
+    bar.textContent = count > 0 ? barLabel(count) : '';
+    const countEl = row.querySelector('.urgency-count');
+    if (countEl) countEl.textContent = count;
+  }
+
+  function updatePersonRow(key, count, initialMax, barLabel) {
+    const row = document.querySelector('[data-person-key="' + key + '"]');
+    if (!row) return;
+    const bar = row.querySelector('.person-bar');
+    const countEl = row.querySelector('.person-count');
+    const pct = initialMax ? Math.min(100, (count / initialMax) * 100) : 0;
+    if (bar) {
+      bar.style.width = pct + '%';
+      bar.textContent = count > 0 ? barLabel(count) : '';
+    }
+    if (countEl) countEl.textContent = count;
+  }
+
+  function updatePersonBlockCounts() {
+    document.querySelectorAll('.person-block').forEach(block => {
+      const rows = block.querySelectorAll('.task-row[data-task-index]').length;
+      const countEl = block.querySelector('.person-header .count');
+      if (countEl) countEl.textContent = rows + (rows === 1 ? ' action' : ' actions');
+    });
+  }
+
+  function updateCounters() {
+    // Remaining + progress
+    const remaining = countRemainingTotal();
+    completedCount = TOTAL_TASKS - remaining;
+    setText('completedCount', completedCount);
+    setText('totalCount', TOTAL_TASKS);
+    const pct = TOTAL_TASKS ? (completedCount / TOTAL_TASKS) * 100 : 0;
+    const bar = document.getElementById('progressBar');
+    if (bar) bar.style.width = pct + '%';
+
+    // Tyron banner
+    const tUrgent   = countTyronByClass('urgent');
+    const tToday    = countTyronByClass('today');
+    const tWeek     = countTyronByClass('week');
+    const tUpcoming = countTyronByClass('upcoming');
+    const tTotal    = countTyronCards();
+    setText('tyronOverdue',   tUrgent);
+    setText('tyronToday',     tToday);
+    setText('tyronUpcoming',  tWeek + tUpcoming);
+    setText('tyronTotalLabel', tTotal + (tTotal === 1 ? ' personal action' : ' personal actions'));
+
+    // Urgency chart — Tyron cards + team task-rows
+    const uUrgent   = tUrgent   + countRowsByDot('dot-urgent');
+    const uToday    = tToday    + countRowsByDot('dot-today');
+    const uWeek     = tWeek     + countRowsByDot('dot-week');
+    const uUpcoming = tUpcoming + countRowsByDot('dot-upcoming');
+    const uOngoing  =             countRowsByDot('dot-ongoing');
+    const uTotalOpen = uUrgent + uToday + uWeek + uUpcoming + uOngoing;
+
+    updateUrgencyRow('urg-urgent',   uUrgent,   INITIAL.urgency.urgent,   n => n + ' action' + (n === 1 ? '' : 's'));
+    updateUrgencyRow('urg-today',    uToday,    INITIAL.urgency.today,    n => n + ' action' + (n === 1 ? '' : 's'));
+    updateUrgencyRow('urg-week',     uWeek,     INITIAL.urgency.week,     n => String(n));
+    updateUrgencyRow('urg-upcoming', uUpcoming, INITIAL.urgency.upcoming, n => String(n));
+    updateUrgencyRow('urg-ongoing',  uOngoing,  INITIAL.urgency.ongoing,  n => String(n));
+
+    // Urgency title + summary
+    setText('urgencyTitleTotal', uTotalOpen + ' Open Action' + (uTotalOpen === 1 ? '' : 's'));
+    const urgentTodayPct = uTotalOpen ? Math.round(((uUrgent + uToday) / uTotalOpen) * 100) : 0;
+    const summary = document.getElementById('urgencySummary');
+    if (summary) {
+      if (uTotalOpen === 0) {
+        summary.innerHTML = '🎉 <strong style="color:#27AE60">All actions complete!</strong>';
+      } else {
+        summary.innerHTML = '⚡ <strong style="color:#E74C3C">' + urgentTodayPct + '% of remaining actions</strong> are either overdue or due today';
+      }
+    }
+
+    // Person chart
+    const pCatherine = countRowsByPrefix('catherine');
+    const pNiamh     = countRowsByPrefix('niamh');
+    const pPriyanshu = countRowsByPrefix('priyanshu');
+    const pTyron     = countTyronCards();
+    const pBen       = countRowsByPrefix('ben');
+    const pKate      = countRowsByPrefix('kate');
+    // Niamh/P shared row is kept static (no data-task-index for shared task)
+    const pShared    = INITIAL.person.shared;
+
+    const labelN = n => String(n);
+    const labelTyron = n => (n === INITIAL.person.tyron ? n + ' actions' : String(n));
+    updatePersonRow('catherine', pCatherine, INITIAL.personBlockMax, labelN);
+    updatePersonRow('niamh',     pNiamh,     INITIAL.personBlockMax, labelN);
+    updatePersonRow('priyanshu', pPriyanshu, INITIAL.personBlockMax, labelN);
+    updatePersonRow('tyron',     pTyron,     INITIAL.personBlockMax, labelTyron);
+    updatePersonRow('ben',       pBen,       INITIAL.personBlockMax, labelN);
+    updatePersonRow('kate',      pKate,      INITIAL.personBlockMax, labelN);
+    updatePersonRow('shared',    pShared,    INITIAL.personBlockMax, labelN);
+
+    // Team summary — who now carries the most?
+    const openLoad = [
+      { name: 'Catherine', count: pCatherine, color: '#8E44AD' },
+      { name: 'Niamh',     count: pNiamh,     color: '#27AE60' },
+      { name: 'Priyanshu', count: pPriyanshu, color: '#E67E22' },
+      { name: 'Tyron',     count: pTyron,     color: '#1F3864' },
+      { name: 'Ben',       count: pBen,       color: '#2980B9' },
+      { name: 'Kate',      count: pKate,      color: '#E91E63' }
+    ].sort((a, b) => b.count - a.count);
+    const teamSummary = document.getElementById('teamSummary');
+    if (teamSummary && openLoad.length) {
+      const top = openLoad[0];
+      if (top.count === 0) {
+        teamSummary.innerHTML = '🎉 <strong style="color:#27AE60">All team actions complete!</strong>';
+      } else {
+        teamSummary.innerHTML = '🏆 <strong style="color:' + top.color + '">' + top.name +
+          '</strong> now carries the most actions (' + top.count + ')';
+      }
+    }
+
+    // Person-block header counts
+    updatePersonBlockCounts();
+
+    // Footer
+    const footer = document.getElementById('footerText');
+    if (footer) {
+      footer.textContent = 'Acacia Wealth — Actions Dashboard · Generated 16 April 2026, updated 21 April 2026 · ' +
+        remaining + ' open action' + (remaining === 1 ? '' : 's') + ' across 7 team members · ' +
+        completedCount + ' completed';
+    }
+  }
+
+  // ── INTERACTION ─────────────────────────────────────────────────────────────
+  function animateOut(el, onDone) {
+    el.style.maxHeight = el.offsetHeight + 'px';
+    el.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      el.classList.add('removing');
+      setTimeout(onDone, 600);
+    });
+  }
+
+  function removeElement(el) {
+    removed.push({ el, parent: el.parentNode, nextSibling: el.nextSibling });
+    animateOut(el, () => el.remove());
+
+    // Also remove any linked timeline item
+    const taskRef = el.dataset.taskIndex
+      ? el.dataset.taskIndex
+      : (el.dataset.tyronIndex !== undefined
+          ? 'tyron-' + el.dataset.tyronIndex
+          : null);
+
+    if (taskRef) {
+      const tlItem = document.querySelector('.timeline-item[data-task-ref="' + taskRef + '"]');
+      if (tlItem) {
+        removed.push({ el: tlItem, parent: tlItem.parentNode, nextSibling: tlItem.nextSibling });
+        animateOut(tlItem, () => tlItem.remove());
+      }
+    }
+
+    // Strip identifying attributes BEFORE recount so counts reflect the tick immediately
+    // (the element is still in the DOM during its fade-out animation, but must not be counted)
+    if (el.hasAttribute('data-tyron-index')) el.removeAttribute('data-tyron-index');
+    if (el.hasAttribute('data-task-index'))  el.removeAttribute('data-task-index');
+    updateCounters();
+    saveProgress();
+    refreshUndoButton();
+  }
+
+  function toggleTyronTask(index) {
+    const card = document.querySelector('[data-tyron-index="' + index + '"]');
+    if (!card || card.classList.contains('removing')) return;
+    card.querySelector('.task-checkbox').classList.add('checked');
+    setTimeout(() => removeElement(card), 300);
+  }
+
+  function toggleTask(event) {
+    const row = event.currentTarget;
+    if (!row || row.classList.contains('removing')) return;
+    row.querySelector('.task-row-checkbox').classList.add('checked');
+    setTimeout(() => removeElement(row), 300);
+  }
+
+  function undoLastTick() {
+    if (!removed.length) return;
+    // The last tick pushed [primary, (optional) timeline-twin] into `removed`.
+    // Pop from the tail until we've restored exactly one primary element.
+    const popped = [];
+    let foundPrimary = false;
+    while (removed.length && !foundPrimary) {
+      const entry = removed.pop();
+      popped.push(entry);
+      if (entry.el && entry.el.classList && (entry.el.classList.contains('task-card') || entry.el.classList.contains('task-row'))) {
+        foundPrimary = true;
+      }
+    }
+    if (!foundPrimary) {
+      // Nothing matched — push back what we popped, do nothing.
+      popped.reverse().forEach(e => removed.push(e));
+      return;
+    }
+    // Restore them all (timeline first, then primary, since we popped LIFO).
+    popped.forEach(({ el, parent, nextSibling }) => {
+      el.classList.remove('removing');
+      el.style.maxHeight = '';
+      el.style.overflow = '';
+      if (el.dataset.origTyronIndex) el.setAttribute('data-tyron-index', el.dataset.origTyronIndex);
+      if (el.dataset.origTaskIndex)  el.setAttribute('data-task-index',  el.dataset.origTaskIndex);
+      el.querySelector('.task-checkbox, .task-row-checkbox')?.classList.remove('checked');
+      if (nextSibling && nextSibling.parentNode === parent) {
+        parent.insertBefore(el, nextSibling);
+      } else {
+        parent.appendChild(el);
+      }
+    });
+    saveProgress();
+    updateCounters();
+    refreshUndoButton();
+  }
+
+  function refreshUndoButton() {
+    const b = document.getElementById('undoBtn');
+    if (b) b.disabled = removed.length === 0;
+  }
+
+  function resetAll() {
+    removed.slice().reverse().forEach(({ el, parent, nextSibling }) => {
+      el.classList.remove('removing');
+      el.style.maxHeight = '';
+      el.style.overflow = '';
+      // Restore the data attributes we cleared on removal, using snapshots captured at init
+      if (el.dataset.origTyronIndex) {
+        el.setAttribute('data-tyron-index', el.dataset.origTyronIndex);
+      }
+      if (el.dataset.origTaskIndex) {
+        el.setAttribute('data-task-index', el.dataset.origTaskIndex);
+      }
+      el.querySelector('.task-checkbox, .task-row-checkbox')?.classList.remove('checked');
+      if (nextSibling && nextSibling.parentNode === parent) {
+        parent.insertBefore(el, nextSibling);
+      } else {
+        parent.appendChild(el);
+      }
+    });
+    removed.length = 0;
+    clearProgress();
+    updateCounters();
+    refreshUndoButton();
+  }
+
+  // ── INIT ────────────────────────────────────────────────────────────────────
+  window.addEventListener('load', () => {
+    // Restore any manually-added tasks BEFORE counting so they're included in the initial total
+    restoreAddedTasks();
+
+    // Cache initial counts BEFORE any user interaction so bar scales stay fixed
+    // (bars represent progress against the original totals)
+    TOTAL_TASKS = countRemainingTotal();
+
+    INITIAL.urgency.urgent   = countTyronByClass('urgent')   + countRowsByDot('dot-urgent');
+    INITIAL.urgency.today    = countTyronByClass('today')    + countRowsByDot('dot-today');
+    INITIAL.urgency.week     = countTyronByClass('week')     + countRowsByDot('dot-week');
+    INITIAL.urgency.upcoming = countTyronByClass('upcoming') + countRowsByDot('dot-upcoming');
+    INITIAL.urgency.ongoing  = countRowsByDot('dot-ongoing');
+
+    INITIAL.person.catherine = countRowsByPrefix('catherine');
+    INITIAL.person.niamh     = countRowsByPrefix('niamh');
+    INITIAL.person.priyanshu = countRowsByPrefix('priyanshu');
+    INITIAL.person.tyron     = countTyronCards();
+    INITIAL.person.ben       = countRowsByPrefix('ben');
+    INITIAL.person.kate      = countRowsByPrefix('kate');
+    INITIAL.person.shared    = 1; // static shared row
+
+    INITIAL.personBlockMax = Math.max(
+      INITIAL.person.catherine, INITIAL.person.niamh, INITIAL.person.priyanshu,
+      INITIAL.person.tyron, INITIAL.person.ben, INITIAL.person.kate, INITIAL.person.shared, 1
+    );
+
+    // Store snapshots of each task element so Reset All can restore data attributes
+    document.querySelectorAll('.task-card[data-tyron-index]').forEach(el => {
+      el.dataset.origTyronIndex = el.dataset.tyronIndex;
+    });
+    document.querySelectorAll('.task-row[data-task-index]').forEach(el => {
+      el.dataset.origTaskIndex = el.dataset.taskIndex;
+    });
+
+    // Inject reassign buttons + replay any saved reassignments BEFORE completions
+    // (so a previously-completed reassigned task is found at its new ID, not its old one).
+    injectReassignButtons();
+    injectAddTaskButtons();
+    applySavedReassignments();
+
+    // Restore any previously-ticked tasks saved to localStorage
+    // (done BEFORE updateCounters so the recomputed stats already reflect the saved state)
+    const saved = loadProgress();
+    saved.forEach(id => {
+      let el = null;
+      if (id.startsWith('tyron-')) {
+        el = document.querySelector('[data-tyron-index="' + id.slice(6) + '"]');
+      } else {
+        el = document.querySelector('[data-task-index="' + id + '"]');
+      }
+      if (!el) return;  // task may no longer exist (e.g. dashboard updated)
+
+      // Mark visually as done (in case the user un-ticks later by using Reset All)
+      const cb = el.querySelector('.task-checkbox, .task-row-checkbox');
+      if (cb) cb.classList.add('checked');
+
+      // Record so Reset All can restore it
+      removed.push({ el, parent: el.parentNode, nextSibling: el.nextSibling });
+
+      // Strip identifying attribute so counters treat it as "done"
+      if (el.hasAttribute('data-tyron-index')) el.removeAttribute('data-tyron-index');
+      if (el.hasAttribute('data-task-index'))  el.removeAttribute('data-task-index');
+
+      // Remove from DOM (no animation on page load — instant)
+      el.remove();
+
+      // Also remove any linked timeline item
+      const tlItem = document.querySelector('.timeline-item[data-task-ref="' + id + '"]');
+      if (tlItem) {
+        removed.push({ el: tlItem, parent: tlItem.parentNode, nextSibling: tlItem.nextSibling });
+        tlItem.remove();
+      }
+    });
+
+    updateCounters();
+    refreshUndoButton();
+    document.addEventListener('click', closeReassignMenuOnOutside, true);
+    window.addEventListener('scroll', closeOpenMenu, true);
+    window.addEventListener('resize', closeOpenMenu);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeOpenMenu();
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        undoLastTick();
+      }
+    });
+  });
+
+  // ── REASSIGN ─────────────────────────────────────────────────────────────
+  const REASSIGN_KEY = 'acacia-dashboard-reassignments-v1';
+
+  const OWNERS = {
+    tyron:     { label: 'Tyron',     color: '#1F3864', initial: 'T' },
+    catherine: { label: 'Catherine', color: '#8E44AD', initial: 'C' },
+    niamh:     { label: 'Niamh',     color: '#27AE60', initial: 'N' },
+    priyanshu: { label: 'Priyanshu', color: '#E67E22', initial: 'P' },
+    ben:       { label: 'Ben',       color: '#2980B9', initial: 'B' },
+    kate:      { label: 'Kate',      color: '#E91E63', initial: 'K' },
+    jolanta:   { label: 'Jolanta',   color: '#16A085', initial: 'J' }
+  };
+
+  function loadReassignments() {
+    try { const raw = localStorage.getItem(REASSIGN_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch (e) { return {}; }
+  }
+  function saveReassignments(map) {
+    try { localStorage.setItem(REASSIGN_KEY, JSON.stringify(map)); } catch (e) {}
+  }
+
+  function ownerOfElement(el) {
+    if (el.hasAttribute('data-tyron-index')) return 'tyron';
+    const idx = el.getAttribute('data-task-index') || '';
+    const m = idx.match(/^([a-z]+)-/);
+    return m ? m[1] : null;
+  }
+
+  function originalIdOfElement(el) {
+    if (el.dataset.origTyronIndex) return 'tyron-' + el.dataset.origTyronIndex;
+    if (el.dataset.origTaskIndex)  return el.dataset.origTaskIndex;
+    if (el.hasAttribute('data-tyron-index')) return 'tyron-' + el.getAttribute('data-tyron-index');
+    if (el.hasAttribute('data-task-index'))  return el.getAttribute('data-task-index');
+    return null;
+  }
+
+  function urgencyOfElement(el) {
+    if (el.classList.contains('task-card')) {
+      for (const c of ['urgent','today','week','upcoming']) {
+        if (el.classList.contains(c)) return c;
+      }
+      return 'upcoming';
+    }
+    const dot = el.querySelector('.task-dot');
+    if (!dot) return 'upcoming';
+    for (const c of ['dot-urgent','dot-today','dot-week','dot-upcoming','dot-ongoing']) {
+      if (dot.classList.contains(c)) return c.slice(4);
+    }
+    return 'upcoming';
+  }
+
+  function titleOfElement(el) {
+    return (el.querySelector('.task-title, .task-row-text')?.textContent || '').trim();
+  }
+  function dueOfElement(el) {
+    return (el.querySelector('.task-due, .task-row-due')?.textContent || '').trim() || urgencyLabel(urgencyOfElement(el));
+  }
+  function metaOfElement(el) {
+    const meta = el.querySelector('.task-meta');
+    if (!meta) return '';
+    return meta.innerHTML;
+  }
+
+  function urgencyLabel(u) {
+    return ({ urgent:'ASAP', today:'Today', week:'This week', upcoming:'Upcoming', ongoing:'Ongoing' })[u] || 'Upcoming';
+  }
+  function urgencyBadge(u) {
+    return ({ urgent:'⚠ ASAP', today:'⚡ Today', week:'This Week', upcoming:'Upcoming', ongoing:'Ongoing' })[u] || 'Upcoming';
+  }
+
+  function nextTyronIndex() {
+    let max = -1;
+    document.querySelectorAll('[data-tyron-index]').forEach(el => {
+      const n = parseInt(el.getAttribute('data-tyron-index'), 10);
+      if (!isNaN(n) && n > max) max = n;
+    });
+    // Also consider orig snapshots so we don't collide with a hidden completed item
+    document.querySelectorAll('[data-orig-tyron-index]').forEach(el => {
+      const n = parseInt(el.dataset.origTyronIndex, 10);
+      if (!isNaN(n) && n > max) max = n;
+    });
+    return max + 1;
+  }
+  function nextTeamIndex(prefix) {
+    let max = -1;
+    document.querySelectorAll(`[data-task-index^="${prefix}-"]`).forEach(el => {
+      const n = parseInt(el.getAttribute('data-task-index').slice(prefix.length + 1), 10);
+      if (!isNaN(n) && n > max) max = n;
+    });
+    return max + 1;
+  }
+
+  function buildTyronCard({ title, urgency, due, metaHtml, index }) {
+    const card = document.createElement('div');
+    card.className = 'task-card ' + urgency;
+    card.setAttribute('data-tyron-index', String(index));
+    card.dataset.origTyronIndex = String(index);
+    card.setAttribute('onclick', 'toggleTyronTask(' + index + ')');
+    const dueClass = urgency === 'urgent' ? 'overdue' : (urgency === 'today' ? 'today-due' : '');
+    card.innerHTML = `
+      <div class="task-checkbox"></div>
+      <div class="task-badge ${urgency}">${urgencyBadge(urgency)}</div>
+      <div class="task-body">
+        <div class="task-title">${escapeHtml(title)}</div>
+        ${metaHtml ? `<div class="task-meta">${metaHtml}</div>` : ''}
+      </div>
+      <div class="task-due ${dueClass}">${escapeHtml(due)}</div>
+    `;
+    return card;
+  }
+
+  function buildTeamRow({ title, urgency, due, ownerKey, index }) {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    const idStr = ownerKey + '-' + index;
+    row.setAttribute('data-task-index', idStr);
+    row.dataset.origTaskIndex = idStr;
+    row.setAttribute('onclick', 'toggleTask(event)');
+    row.innerHTML = `
+      <div class="task-row-checkbox"></div>
+      <div class="task-dot dot-${urgency}"></div>
+      <div class="task-row-text">${escapeHtml(title)}</div>
+      <div class="task-row-due due-${urgency}">${escapeHtml(due)}</div>
+    `;
+    return row;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function findTyronInsertionPoint() {
+    // Place reassigned-to-Tyron cards in the very first .tyron-tasks block (rolling Weekly Check)
+    return document.querySelector('.tyron-tasks');
+  }
+
+  function findPersonBlockTaskList(ownerKey) {
+    const initial = OWNERS[ownerKey].initial;
+    const blocks = document.querySelectorAll('.person-block');
+    for (const b of blocks) {
+      if (b.querySelector('.avatar')?.textContent.trim() === initial) {
+        return b.querySelector('.task-list');
+      }
+    }
+    return null;
+  }
+
+  function reassignTask(el, newOwner, opts = {}) {
+    const currentOwner = ownerOfElement(el);
+    if (!currentOwner || currentOwner === newOwner) return;
+    const originalId = originalIdOfElement(el);
+    const title = titleOfElement(el);
+    const urgency = urgencyOfElement(el);
+    const due = dueOfElement(el);
+    const metaHtml = metaOfElement(el);
+
+    const oldRef = currentOwner === 'tyron'
+      ? 'tyron-' + el.getAttribute('data-tyron-index')
+      : el.getAttribute('data-task-index');
+    const tlItem = document.querySelector('.timeline-item[data-task-ref="' + oldRef + '"]');
+
+    let newEl, newRef;
+    if (newOwner === 'tyron') {
+      const idx = nextTyronIndex();
+      newEl = buildTyronCard({ title, urgency, due, metaHtml, index: idx });
+      const host = findTyronInsertionPoint();
+      if (!host) return;
+      host.insertBefore(newEl, host.firstChild);
+      newRef = 'tyron-' + idx;
+    } else {
+      const idx = nextTeamIndex(newOwner);
+      const teamUrgency = (urgency === 'ongoing') ? 'ongoing' : urgency;
+      newEl = buildTeamRow({ title, urgency: teamUrgency, due: dueLabelForTeam(urgency, due), ownerKey: newOwner, index: idx });
+      const host = findPersonBlockTaskList(newOwner);
+      if (!host) return;
+      host.appendChild(newEl);
+      newRef = newOwner + '-' + idx;
+    }
+
+    if (tlItem) {
+      tlItem.setAttribute('data-task-ref', newRef);
+      const pill = tlItem.querySelector('.ti-person');
+      if (pill) {
+        pill.style.background = OWNERS[newOwner].color;
+        pill.textContent = OWNERS[newOwner].label;
+      }
+    }
+
+    el.remove();
+
+    if (!opts.skipPersist) {
+      const map = loadReassignments();
+      const seedId = opts.seedId || originalId;
+      map[seedId] = { owner: newOwner, currentRef: newRef, urgency, due, title };
+      saveReassignments(map);
+    }
+
+    newEl.classList.add('reassign-flash');
+    setTimeout(() => newEl.classList.remove('reassign-flash'), 1200);
+
+    injectReassignButton(newEl);
+    updateCounters();
+  }
+
+  function dueLabelForTeam(urgency, originalDue) {
+    if (/\d/.test(originalDue) && originalDue.length <= 14) return originalDue;
+    return urgencyLabel(urgency);
+  }
+
+  // ── Reassign UI ──────────────────────────────────────────────────────────
+  let openMenuEl = null;
+  let openMenuOwner = null;
+
+  function injectReassignButtons() {
+    document.querySelectorAll('.task-card[data-tyron-index], .task-row[data-task-index]').forEach(injectReassignButton);
+  }
+
+  function injectReassignButton(el) {
+    if (!el || el.querySelector(':scope > .reassign-btn')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'reassign-btn';
+    btn.title = 'Reassign this task';
+    btn.textContent = '↔';
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openReassignMenu(el, btn);
+    });
+    el.appendChild(btn);
+  }
+
+  function openReassignMenu(taskEl, btn) {
+    if (openMenuOwner === btn) { closeOpenMenu(); return; }
+    closeOpenMenu();
+
+    const currentOwner = ownerOfElement(taskEl);
+    const menu = document.createElement('div');
+    menu.className = 'reassign-menu';
+
+    const heading = document.createElement('div');
+    heading.className = 'ra-title';
+    heading.textContent = 'Reassign to…';
+    menu.appendChild(heading);
+
+    Object.keys(OWNERS).forEach(function (key) {
+      if (key === currentOwner) return;
+      const info = OWNERS[key];
+      const opt = document.createElement('button');
+      opt.type = 'button';
+      const dot = document.createElement('span');
+      dot.className = 'ra-dot';
+      dot.style.background = info.color;
+      dot.textContent = info.initial;
+      const lab = document.createElement('span');
+      lab.textContent = info.label;
+      opt.appendChild(dot);
+      opt.appendChild(lab);
+      opt.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeOpenMenu();
+        reassignTask(taskEl, key);
+      });
+      menu.appendChild(opt);
+    });
+
+    document.body.appendChild(menu);
+    const r = btn.getBoundingClientRect();
+    const mr = menu.getBoundingClientRect();
+    let top = r.bottom + 6;
+    let left = r.right - mr.width;
+    if (left < 8) left = 8;
+    if (top + mr.height > window.innerHeight - 8) top = r.top - mr.height - 6;
+    menu.style.top = top + 'px';
+    menu.style.left = left + 'px';
+
+    btn.classList.add('menu-open');
+    openMenuEl = menu;
+    openMenuOwner = btn;
+  }
+
+  function closeOpenMenu() {
+    if (openMenuEl) { openMenuEl.remove(); openMenuEl = null; }
+    if (openMenuOwner) { openMenuOwner.classList.remove('menu-open'); openMenuOwner = null; }
+  }
+
+  function closeReassignMenuOnOutside(e) {
+    if (!openMenuEl) return;
+    if (openMenuEl.contains(e.target)) return;
+    if (openMenuOwner && openMenuOwner.contains(e.target)) return;
+    closeOpenMenu();
+  }
+
+  function applySavedReassignments() {
+    const map = loadReassignments();
+    Object.keys(map).forEach(function (seedId) {
+      const entry = map[seedId];
+      let el = null;
+      if (seedId.startsWith('tyron-')) {
+        el = document.querySelector('[data-tyron-index="' + seedId.slice(6) + '"]');
+      } else {
+        el = document.querySelector('[data-task-index="' + seedId + '"]');
+      }
+      if (!el && entry.currentRef) {
+        if (entry.currentRef.startsWith('tyron-')) {
+          el = document.querySelector('[data-tyron-index="' + entry.currentRef.slice(6) + '"]');
+        } else {
+          el = document.querySelector('[data-task-index="' + entry.currentRef + '"]');
+        }
+        if (el && ownerOfElement(el) === entry.owner) return;
+      }
+      if (!el) return;
+      reassignTask(el, entry.owner, { skipPersist: true, seedId: seedId });
+    });
+  }
+
+  // ── SAVE-TO-FILE (download a copy of the dashboard with state baked in) ────
+  function markDirty() {
+    const b = document.getElementById('saveBtn');
+    if (b) b.classList.add('dirty');
+  }
+  function clearDirty() {
+    const b = document.getElementById('saveBtn');
+    if (b) b.classList.remove('dirty');
+  }
+
+  function saveDashboard() {
+    // Close any open menus / transient UI before snapshotting
+    try { closeOpenMenu(); } catch (e) {}
+
+    // Take a deep clone of the entire document
+    const clone = document.documentElement.cloneNode(true);
+
+    // Remove dynamic UI elements that were injected at runtime
+    clone.querySelectorAll('.reassign-btn').forEach(b => b.remove());
+    clone.querySelectorAll('.reassign-menu').forEach(m => m.remove());
+    clone.querySelectorAll('.save-toast').forEach(t => t.remove());
+
+    // Drop any nodes still mid-animation
+    clone.querySelectorAll('.task-card.removing, .task-row.removing, .timeline-item.removing').forEach(e => e.remove());
+
+    // Strip dataset.orig-* snapshots and dirty class — they shouldn't ship
+    clone.querySelectorAll('[data-orig-tyron-index]').forEach(el => { el.removeAttribute('data-orig-tyron-index'); });
+    clone.querySelectorAll('[data-orig-task-index]').forEach(el => { el.removeAttribute('data-orig-task-index'); });
+    const sb = clone.querySelector('#saveBtn');
+    if (sb) sb.classList.remove('dirty');
+
+    // Update person-block counts to reflect remaining rows
+    const personMap = {
+      Catherine: 'catherine', Niamh: 'niamh', Priyanshu: 'priyanshu',
+      Ben: 'ben', Kate: 'kate'
+    };
+    clone.querySelectorAll('.person-block').forEach(block => {
+      const h3 = block.querySelector('h3');
+      const countEl = block.querySelector('.count');
+      if (!h3 || !countEl) return;
+      const name = h3.textContent.trim();
+      const prefix = personMap[name];
+      if (!prefix) return;
+      const n = block.querySelectorAll('.task-row[data-task-index^="' + prefix + '-"]').length;
+      countEl.textContent = n + ' action' + (n === 1 ? '' : 's');
+    });
+
+    // Update header total
+    const tyronRemaining = clone.querySelectorAll('.task-card[data-tyron-index]').length;
+    const rowsRemaining  = clone.querySelectorAll('.task-row[data-task-index]').length;
+    const totalRemaining = tyronRemaining + rowsRemaining;
+    const header = clone.querySelector('.header-left p');
+    if (header) {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2,'0');
+      const mm = today.toLocaleString('en-GB', { month: 'short' });
+      const yyyy = today.getFullYear();
+      header.textContent = totalRemaining + ' open actions across 7 people · Saved ' + dd + ' ' + mm + ' ' + yyyy;
+    }
+    const totalCountEl = clone.querySelector('#totalCount');
+    if (totalCountEl) totalCountEl.textContent = totalRemaining;
+    const completedCountEl = clone.querySelector('#completedCount');
+    if (completedCountEl) completedCountEl.textContent = '0';
+
+    // Drop any data attributes Cowork might have injected
+    clone.removeAttribute('data-state-saved-at');
+    clone.setAttribute('data-state-saved-at', new Date().toISOString());
+
+    // Serialise
+    const htmlText = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+    // Trigger download
+    const blob = new Blob([htmlText], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Acacia Wealth — Actions Dashboard 16 Apr 2026.html';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 100);
+
+    // Now that the saved file represents the new baseline, clear in-memory completion state
+    try { localStorage.removeItem('acacia-dashboard-completed-v1'); } catch (e) {}
+    try { localStorage.removeItem('acacia-dashboard-reassignments-v1'); } catch (e) {}
+    clearAddedTasks(); // added tasks are now baked into the saved HTML
+
+    clearDirty();
+    showSaveToast(totalRemaining);
+  }
+
+  function showSaveToast(remaining) {
+    const old = document.querySelector('.save-toast');
+    if (old) old.remove();
+    const t = document.createElement('div');
+    t.className = 'save-toast';
+    t.innerHTML = '<div class="toast-title">✓ Dashboard saved</div>' +
+      'Your browser is downloading a fresh copy (' + remaining + ' open actions). ' +
+      'Save it into your OneDrive folder, replacing the existing file — your ticks are now permanent.';
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('visible'));
+    setTimeout(() => {
+      t.classList.remove('visible');
+      setTimeout(() => t.remove(), 400);
+    }, 7000);
+  }
+
+  // ── ADD TASK ─────────────────────────────────────────────────────────────
+  const ADD_TASKS_KEY = 'acacia-dashboard-added-tasks-v1';
+
+  function loadAddedTasks() {
+    try { const raw = localStorage.getItem(ADD_TASKS_KEY); return raw ? JSON.parse(raw) : []; }
+    catch (e) { return []; }
+  }
+  function persistAddedTask(task) {
+    try { const tasks = loadAddedTasks(); tasks.push(task); localStorage.setItem(ADD_TASKS_KEY, JSON.stringify(tasks)); }
+    catch (e) {}
+  }
+  function clearAddedTasks() {
+    try { localStorage.removeItem(ADD_TASKS_KEY); } catch (e) {}
+  }
+
+  let addTaskTarget = null;
+
+  function openAddTaskModal(ownerKey) {
+    addTaskTarget = { ownerKey };
+    const info = OWNERS[ownerKey];
+    document.getElementById('addTaskModalTitle').textContent = 'Add task — ' + info.label;
+    const av = document.getElementById('addTaskAvatar');
+    av.style.background = info.color;
+    av.textContent = info.initial;
+    document.getElementById('addTaskInput').value = '';
+    document.getElementById('addTaskInput').classList.remove('error');
+    document.getElementById('addTaskUrgency').value = 'week';
+    document.getElementById('addTaskDue').value = '';
+    document.getElementById('addTaskOverlay').classList.add('open');
+    setTimeout(() => document.getElementById('addTaskInput').focus(), 220);
+  }
+
+  function closeAddTaskModal() {
+    document.getElementById('addTaskOverlay').classList.remove('open');
+    addTaskTarget = null;
+  }
+
+  function submitAddTask() {
+    if (!addTaskTarget) return;
+    const inp = document.getElementById('addTaskInput');
+    const titleVal = inp.value.trim();
+    if (!titleVal) { inp.classList.add('error'); inp.focus(); return; }
+    inp.classList.remove('error');
+    const urgency = document.getElementById('addTaskUrgency').value;
+    const dueVal  = document.getElementById('addTaskDue').value.trim();
+    const due = dueVal || urgencyLabel(urgency);
+    const { ownerKey } = addTaskTarget;
+    insertAddedTask({ ownerKey, title: titleVal, urgency, due });
+    persistAddedTask({ ownerKey, title: titleVal, urgency, due });
+    TOTAL_TASKS += 1;
+    updateCounters();
+    closeAddTaskModal();
+    markDirty();
+  }
+
+  function insertAddedTask({ ownerKey, title, urgency, due }) {
+    let newEl;
+    if (ownerKey === 'tyron') {
+      const idx = nextTyronIndex();
+      newEl = buildTyronCard({ title, urgency, due, metaHtml: '', index: idx });
+      const host = findTyronInsertionPoint();
+      if (!host) return null;
+      host.insertBefore(newEl, host.firstChild);
+    } else {
+      const idx = nextTeamIndex(ownerKey);
+      newEl = buildTeamRow({ title, urgency, due, ownerKey, index: idx });
+      const host = findPersonBlockTaskList(ownerKey);
+      if (!host) return null;
+      host.appendChild(newEl);
+    }
+    injectReassignButton(newEl);
+    newEl.classList.add('reassign-flash');
+    setTimeout(() => newEl.classList.remove('reassign-flash'), 1200);
+    return newEl;
+  }
+
+  function restoreAddedTasks() {
+    loadAddedTasks().forEach(task => insertAddedTask(task));
+  }
+
+  function injectAddTaskButtons() {
+    // Tyron's "Your Actions" section title
+    document.querySelectorAll('.section-title').forEach(el => {
+      if (!el.textContent.includes('Your Actions') || el.querySelector('.add-task-btn')) return;
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'add-task-btn';
+      btn.title = 'Add a task for Tyron'; btn.textContent = '+ Add Task';
+      btn.addEventListener('click', e => { e.stopPropagation(); openAddTaskModal('tyron'); });
+      el.appendChild(btn);
+    });
+
+    // Each team member's person-block header
+    document.querySelectorAll('.person-block').forEach(block => {
+      const header = block.querySelector('.person-header');
+      if (!header || header.querySelector('.add-task-btn')) return;
+      const avatar = header.querySelector('.avatar');
+      if (!avatar) return;
+      const initial = avatar.textContent.trim();
+      const ownerKey = Object.keys(OWNERS).find(k => OWNERS[k].initial === initial);
+      if (!ownerKey) return;
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'add-task-btn';
+      btn.title = 'Add task for ' + OWNERS[ownerKey].label; btn.textContent = '+ Add';
+      btn.addEventListener('click', e => { e.stopPropagation(); openAddTaskModal(ownerKey); });
+      header.appendChild(btn);
+    });
+  }
+
+  // Close add-task modal on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('addTaskOverlay').classList.contains('open')) {
+      closeAddTaskModal();
+    }
+  });
+
+  // Mark dirty whenever the user ticks or reassigns
+  document.addEventListener('DOMContentLoaded', () => {
+    const origToggleTask = window.toggleTask;
+    const origToggleTyron = window.toggleTyronTask;
+    if (origToggleTask) {
+      window.toggleTask = function (e) { markDirty(); return origToggleTask(e); };
+    }
+    if (origToggleTyron) {
+      window.toggleTyronTask = function (i) { markDirty(); return origToggleTyron(i); };
+    }
+  });
+
+</script>
+
+
+
+<!-- ============================================================ -->
+<!--  ACACIA SEEDBOARD — LIVE SHARED SYNC LAYER                   -->
+<!--  Added for Azure Static Web Apps hosting. Bridges the app's  -->
+<!--  localStorage to a shared backend (/api/state) so the whole  -->
+<!--  team sees the same live board. Safe to remove to revert to  -->
+<!--  a private, per-browser board.                               -->
+<!-- ============================================================ -->
+<script>
+(function () {
+  "use strict";
+
+  // The three localStorage keys the dashboard uses for mutable state.
+  var KEYS = {
+    completed:     'acacia-dashboard-completed-v1',
+    reassignments: 'acacia-dashboard-reassignments-v1',
+    added:         'acacia-dashboard-added-tasks-v1'
+  };
+
+  // Native, un-patched localStorage methods (so our own writes don't loop back as a "push").
+  var rawSet    = localStorage.setItem.bind(localStorage);
+  var rawRemove = localStorage.removeItem.bind(localStorage);
+
+  var serverVersion = null;   // last version we have applied / pushed
+  var pushing = false;        // a POST is currently in flight
+  var dirty   = false;        // we have an unsent local change
+  var pushTimer = null;
+  var bannerShown = false;
+
+  function readJSON(key, fallback) {
+    try { var raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+    catch (e) { return fallback; }
+  }
+  function localSnapshot() {
+    return {
+      completed:     readJSON(KEYS.completed, []),
+      reassignments: readJSON(KEYS.reassignments, {}),
+      added:         readJSON(KEYS.added, [])
+    };
+  }
+  function applyToLocal(state) {
+    // Use raw setters so seeding the cache does NOT trigger another push.
+    rawSet(KEYS.completed,     JSON.stringify(state.completed     || []));
+    rawSet(KEYS.reassignments, JSON.stringify(state.reassignments || {}));
+    rawSet(KEYS.added,         JSON.stringify(state.added         || []));
+  }
+  function hasLocalData(s) {
+    return (s.completed && s.completed.length) ||
+           (s.reassignments && Object.keys(s.reassignments).length) ||
+           (s.added && s.added.length);
+  }
+  function differs(a, b) { return JSON.stringify(a) !== JSON.stringify(b); }
+
+  // ---- API helpers ---------------------------------------------------------
+  function apiGet() {
+    return fetch('/api/state', { headers: { 'cache-control': 'no-cache' } })
+      .then(function (r) { if (!r.ok) throw new Error('GET ' + r.status); return r.json(); });
+  }
+  function apiPut(payload) {
+    return fetch('/api/state', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { if (!r.ok) throw new Error('POST ' + r.status); return r.json(); });
+  }
+
+  // ---- Intercept the dashboard's writes and push them up -------------------
+  localStorage.setItem = function (k, v) {
+    rawSet(k, v);
+    if (k === KEYS.completed || k === KEYS.reassignments || k === KEYS.added) schedulePush();
+  };
+  localStorage.removeItem = function (k) {
+    rawRemove(k);
+    if (k === KEYS.completed || k === KEYS.reassignments || k === KEYS.added) schedulePush();
+  };
+
+  function schedulePush() {
+    dirty = true;
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(pushNow, 500);   // debounce rapid clicks
+  }
+  function pushNow() {
+    if (pushing) { schedulePush(); return; }
+    pushing = true; dirty = false;
+    apiPut(Object.assign({ baseVersion: serverVersion }, localSnapshot()))
+      .then(function (res) { serverVersion = res.version; })
+      .catch(function (e) { console.warn('Seedboard sync: push failed, will retry', e); dirty = true; })
+      .then(function () { pushing = false; if (dirty) schedulePush(); });
+  }
+
+  // ---- Poll for changes made by teammates ----------------------------------
+  function poll() {
+    apiGet().then(function (res) {
+      var remote = { completed: res.completed, reassignments: res.reassignments, added: res.added };
+
+      if (serverVersion === null) {
+        // First reconcile on this page load.
+        var local = localSnapshot();
+        if ((res.version === 0 || !res.version) && hasLocalData(local) && !hasLocalData(remote)) {
+          // Shared board is empty but this browser has progress -> migrate it up (one-time seed).
+          serverVersion = res.version || 0;
+          schedulePush();
+        } else {
+          serverVersion = res.version;
+          if (differs(local, remote)) {
+            applyToLocal(remote);
+            // Reflect the true shared state on this freshly-opened page (guarded against loops).
+            if (!sessionStorage.getItem('seedboard-seeded')) {
+              sessionStorage.setItem('seedboard-seeded', '1');
+              location.reload();
+              return;
+            }
+          }
+        }
+      } else if (res.version !== serverVersion && !dirty && !pushing) {
+        // A teammate changed the board. Cache it and offer a gentle refresh.
+        serverVersion = res.version;
+        applyToLocal(remote);
+        showRefreshBanner();
+      }
+    }).catch(function () {
+      /* offline / not signed in yet — keep working locally, try again next tick */
+    }).then(function () {
+      setTimeout(poll, 3000);
+    });
+  }
+  // Let the reload guard clear shortly after a successful load.
+  window.addEventListener('load', function () {
+    setTimeout(function () { sessionStorage.removeItem('seedboard-seeded'); }, 5000);
+  });
+
+  // ---- Tiny UI: "board updated" pill + signed-in badge ---------------------
+  function showRefreshBanner() {
+    if (bannerShown) return;
+    bannerShown = true;
+    var b = document.createElement('div');
+    b.textContent = '🔄 A teammate updated the board — click to refresh';
+    b.setAttribute('role', 'status');
+    b.style.cssText = 'position:fixed;left:50%;top:18px;transform:translateX(-50%);' +
+      'z-index:99999;background:#16A085;color:#fff;padding:10px 16px;border-radius:999px;' +
+      'font:600 13px Inter,system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer;';
+    b.addEventListener('click', function () { location.reload(); });
+    document.body.appendChild(b);
+  }
+
+  function showUserBadge() {
+    fetch('/.auth/me').then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+      if (!data) return;
+      var name = null;
+      if (data.clientPrincipal) {
+        // Static Web Apps shape
+        name = data.clientPrincipal.userDetails;
+      } else if (Array.isArray(data) && data.length) {
+        // App Service Easy Auth shape: [{ user_id, user_claims:[{typ,val}] }]
+        var claims = data[0].user_claims || [];
+        var byType = function (t) { var c = claims.filter(function (x) { return x.typ === t; })[0]; return c && c.val; };
+        name = byType('name') || byType('preferred_username') ||
+               byType('http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress') ||
+               data[0].user_id;
+      }
+      if (!name) return;
+      var badge = document.createElement('div');
+      badge.style.cssText = 'position:fixed;right:14px;bottom:12px;z-index:99999;' +
+        'background:rgba(20,20,20,.78);color:#fff;padding:6px 12px;border-radius:999px;' +
+        'font:500 12px Inter,system-ui,sans-serif;backdrop-filter:blur(4px);';
+      badge.innerHTML = '👤 ' + name +
+        ' · <a href="/.auth/logout" style="color:#7FE9C9;text-decoration:none;">Sign out</a>';
+      document.body.appendChild(badge);
+    }).catch(function () { /* not on SWA / not authed — ignore */ });
+  }
+
+  // ---- Boot ----------------------------------------------------------------
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showUserBadge);
+  } else {
+    showUserBadge();
+  }
+  poll();
+})();
+</script>
+
+<!-- ============================================================ -->
+<!--  ACACIA SEEDBOARD — IMPORT FROM TRANSCRIPT                   -->
+<!--  Paste a meeting transcript; Claude proposes tasks assigned  -->
+<!--  to the team; you review, then add them live to the board.   -->
+<!-- ============================================================ -->
+<script>
+(function () {
+  "use strict";
+
+  var OWNERS = [
+    { key: 'tyron', label: 'Tyron' }, { key: 'catherine', label: 'Catherine' },
+    { key: 'niamh', label: 'Niamh' }, { key: 'priyanshu', label: 'Priyanshu' },
+    { key: 'ben', label: 'Ben' }, { key: 'kate', label: 'Kate' },
+    { key: 'jolanta', label: 'Jolanta' }
+  ];
+  var URGENCIES = [
+    { key: 'urgent', label: 'Urgent' }, { key: 'today', label: 'Today' },
+    { key: 'week', label: 'This week' }, { key: 'upcoming', label: 'Upcoming' },
+    { key: 'ongoing', label: 'Ongoing' }
+  ];
+  var ADD_TASKS_KEY   = 'acacia-dashboard-added-tasks-v1';
+  var COMPLETED_KEY   = 'acacia-dashboard-completed-v1';
+  var REASSIGN_KEY    = 'acacia-dashboard-reassignments-v1';
+
+  var TEAL = '#16A085';
+
+  function el(tag, style, text) {
+    var e = document.createElement(tag);
+    if (style) e.style.cssText = style;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function makeSelect(options, selected) {
+    var s = el('select', 'padding:6px 8px;border:1px solid #cfd8dc;border-radius:6px;font:500 13px Inter,system-ui,sans-serif;background:#fff;');
+    options.forEach(function (o) {
+      var opt = document.createElement('option');
+      opt.value = o.key; opt.textContent = o.label;
+      if (o.key === selected) opt.selected = true;
+      s.appendChild(opt);
+    });
+    return s;
+  }
+
+  // ---- Trigger button ------------------------------------------------------
+  var btn = el('button', 'position:fixed;right:14px;top:14px;z-index:99998;' +
+    'background:' + TEAL + ';color:#fff;border:none;padding:9px 14px;border-radius:999px;' +
+    'font:600 13px Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);', '📥 Import transcript');
+  btn.addEventListener('click', openModal);
+
+  // ---- Modal ---------------------------------------------------------------
+  var overlay, textarea, statusEl, resultsEl, analyseBtn, addBtn;
+
+  function buildModal() {
+    overlay = el('div', 'position:fixed;inset:0;z-index:99999;background:rgba(15,23,32,.55);' +
+      'display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto;');
+
+    var panel = el('div', 'background:#fff;max-width:760px;width:100%;border-radius:14px;' +
+      'box-shadow:0 20px 60px rgba(0,0,0,.35);font:400 14px Inter,system-ui,sans-serif;color:#1c2833;overflow:hidden;');
+
+    var head = el('div', 'padding:18px 22px;border-bottom:1px solid #eceff1;display:flex;align-items:center;justify-content:space-between;');
+    head.appendChild(el('div', 'font:700 17px Inter,system-ui,sans-serif;', '📥 Import tasks from a transcript'));
+    var close = el('button', 'border:none;background:none;font-size:22px;line-height:1;cursor:pointer;color:#78909c;', '×');
+    close.addEventListener('click', closeModal);
+    head.appendChild(close);
+    panel.appendChild(head);
+
+    var body = el('div', 'padding:20px 22px;');
+    body.appendChild(el('div', 'margin-bottom:8px;color:#546e7a;', 'Paste a meeting transcript below. Claude will suggest tasks and who they belong to — you can edit and pick which to add.'));
+
+    textarea = el('textarea', 'width:100%;min-height:150px;padding:12px;border:1px solid #cfd8dc;border-radius:8px;' +
+      'font:400 13px ui-monospace,Menlo,Consolas,monospace;resize:vertical;box-sizing:border-box;');
+    textarea.placeholder = 'Paste the transcript here…';
+    body.appendChild(textarea);
+
+    var actions = el('div', 'margin-top:12px;display:flex;gap:10px;align-items:center;');
+    analyseBtn = el('button', 'background:' + TEAL + ';color:#fff;border:none;padding:10px 18px;border-radius:8px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;', 'Analyse transcript');
+    analyseBtn.addEventListener('click', analyse);
+    actions.appendChild(analyseBtn);
+    statusEl = el('div', 'color:#546e7a;font-size:13px;');
+    actions.appendChild(statusEl);
+    body.appendChild(actions);
+
+    resultsEl = el('div', 'margin-top:18px;');
+    body.appendChild(resultsEl);
+
+    panel.appendChild(body);
+
+    var foot = el('div', 'padding:14px 22px;border-top:1px solid #eceff1;display:flex;justify-content:flex-end;gap:10px;');
+    var cancel = el('button', 'background:#eceff1;color:#37474f;border:none;padding:10px 16px;border-radius:8px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;', 'Cancel');
+    cancel.addEventListener('click', closeModal);
+    foot.appendChild(cancel);
+    addBtn = el('button', 'background:#2e7d32;color:#fff;border:none;padding:10px 18px;border-radius:8px;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;opacity:.5;pointer-events:none;', 'Add selected to board');
+    addBtn.addEventListener('click', addSelected);
+    foot.appendChild(addBtn);
+    panel.appendChild(foot);
+
+    overlay.appendChild(panel);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.body.appendChild(overlay);
+  }
+
+  function openModal() {
+    if (!overlay) buildModal();
+    textarea.value = ''; statusEl.textContent = ''; resultsEl.innerHTML = '';
+    setAddEnabled(false);
+    overlay.style.display = 'flex';
+    setTimeout(function () { textarea.focus(); }, 100);
+  }
+  function closeModal() { if (overlay) overlay.style.display = 'none'; }
+  function setAddEnabled(on) {
+    addBtn.style.opacity = on ? '1' : '.5';
+    addBtn.style.pointerEvents = on ? 'auto' : 'none';
+  }
+
+  // ---- Analyse -------------------------------------------------------------
+  function analyse() {
+    var text = textarea.value.trim();
+    if (!text) { statusEl.textContent = 'Paste a transcript first.'; return; }
+    analyseBtn.disabled = true; analyseBtn.style.opacity = '.6';
+    statusEl.textContent = 'Analysing… this can take a few seconds.';
+    resultsEl.innerHTML = ''; setAddEnabled(false);
+
+    fetch('/api/import-transcript', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ transcript: text })
+    }).then(function (r) {
+      return r.json().then(function (data) {
+        if (!r.ok) throw new Error(data.error || ('Error ' + r.status));
+        return data;
+      });
+    }).then(function (data) {
+      var tasks = data.tasks || [];
+      statusEl.textContent = tasks.length ? ('Found ' + tasks.length + ' task' + (tasks.length === 1 ? '' : 's') + ' — review below.') : 'No action items found in this transcript.';
+      renderResults(tasks);
+    }).catch(function (e) {
+      statusEl.textContent = '⚠️ ' + e.message;
+    }).then(function () {
+      analyseBtn.disabled = false; analyseBtn.style.opacity = '1';
+    });
+  }
+
+  function renderResults(tasks) {
+    resultsEl.innerHTML = '';
+    if (!tasks.length) return;
+    tasks.forEach(function (t) {
+      var row = el('div', 'display:flex;gap:10px;align-items:center;padding:10px;border:1px solid #eceff1;border-radius:8px;margin-bottom:8px;');
+      var cb = el('input'); cb.type = 'checkbox'; cb.checked = true; cb.style.cssText = 'width:18px;height:18px;flex:none;';
+      row.appendChild(cb);
+
+      var title = el('input', 'flex:1;padding:6px 8px;border:1px solid #cfd8dc;border-radius:6px;font:500 13px Inter,system-ui,sans-serif;');
+      title.value = t.title || '';
+      row.appendChild(title);
+
+      var owner = makeSelect(OWNERS, OWNERS.some(function (o) { return o.key === t.ownerKey; }) ? t.ownerKey : 'tyron');
+      row.appendChild(owner);
+
+      var urg = makeSelect(URGENCIES, URGENCIES.some(function (u) { return u.key === t.urgency; }) ? t.urgency : 'week');
+      row.appendChild(urg);
+
+      var due = el('input', 'width:110px;padding:6px 8px;border:1px solid #cfd8dc;border-radius:6px;font:500 13px Inter,system-ui,sans-serif;');
+      due.value = t.due || ''; due.placeholder = 'due (opt.)';
+      row.appendChild(due);
+
+      row._get = function () {
+        return cb.checked ? {
+          ownerKey: owner.value,
+          title: title.value.trim(),
+          urgency: urg.value,
+          due: (due.value.trim() || (URGENCIES.filter(function (u) { return u.key === urg.value; })[0] || {}).label || '')
+        } : null;
+      };
+      resultsEl.appendChild(row);
+    });
+    setAddEnabled(true);
+  }
+
+  // ---- Commit (write through the shared-state path) ------------------------
+  function addSelected() {
+    var rows = Array.prototype.slice.call(resultsEl.children);
+    var picked = rows.map(function (r) { return r._get ? r._get() : null; })
+      .filter(function (t) { return t && t.title; });
+    if (!picked.length) { statusEl.textContent = 'Tick at least one task to add.'; return; }
+
+    setAddEnabled(false); statusEl.textContent = 'Saving ' + picked.length + ' task' + (picked.length === 1 ? '' : 's') + '…';
+
+    var completed = readJSON(COMPLETED_KEY, []);
+    var reassignments = readJSON(REASSIGN_KEY, {});
+    var added = readJSON(ADD_TASKS_KEY, []).concat(picked);
+
+    // Persist locally so the reloaded page renders them immediately…
+    try { localStorage.setItem(ADD_TASKS_KEY, JSON.stringify(added)); } catch (e) {}
+
+    // …and push to the shared store BEFORE reloading, so nothing is lost.
+    fetch('/api/state', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ completed: completed, reassignments: reassignments, added: added })
+    }).then(function (r) {
+      if (!r.ok) throw new Error('save failed (' + r.status + ')');
+      location.reload();
+    }).catch(function (e) {
+      statusEl.textContent = '⚠️ ' + e.message + ' — your tasks are saved locally; refresh to retry sync.';
+      setAddEnabled(true);
+    });
+  }
+
+  function readJSON(key, fallback) {
+    try { var raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; }
+    catch (e) { return fallback; }
+  }
+
+  // ---- Mount the button ----------------------------------------------------
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { document.body.appendChild(btn); });
+  } else {
+    document.body.appendChild(btn);
+  }
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,14 @@
+{
+  "name": "acacia-seedboard-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Acacia Wealth Seedboard — shared live task board (Vercel)",
+  "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0",
+    "@upstash/redis": "^1.34.3"
+  }
+}
